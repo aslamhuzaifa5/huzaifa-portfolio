@@ -1,0 +1,2595 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="Huzaifa Aslam — Senior Video Editor & Content Creator. 4 years of experience in documentary edits, talking-head videos, typography reels and YouTube automation. Founder, Cine Graphix Studio, Lahore." />
+    <link rel="icon" href="data:," />
+    <title>Huzaifa Aslam — Senior Video Editor &amp; Content Creator</title>
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+    <style>
+      :root{
+        --bg:#08080a;
+        --bg-2:#0d0d10;
+        --panel:#121216;
+        --panel-2:#17171c;
+        --line:rgba(255,255,255,.09);
+        --line-soft:rgba(255,255,255,.055);
+        --text:#f5f3ef;
+        --muted:#a9a69f;
+        --muted-2:#7c7a74;
+        --orange:#a3e635;
+        --orange-2:#bef264;
+        --orange-dim:rgba(163,230,53,.14);
+        --radius:18px;
+        --font-d:"Clash Display","Archivo",system-ui,sans-serif;
+        --font-b:"Satoshi",system-ui,-apple-system,"Segoe UI",sans-serif;
+      }
+      *{box-sizing:border-box;margin:0;padding:0}
+      html{scroll-behavior:smooth}
+      html,body{overflow-x:hidden}
+      body{
+        background:var(--bg);
+        color:var(--text);
+        font-family:var(--font-b);
+        font-size:16.5px;
+        line-height:1.6;
+        -webkit-font-smoothing:antialiased;
+      }
+      ::selection{background:var(--orange);color:#0a0a0a}
+      img{display:block;max-width:100%}
+      a{color:inherit;text-decoration:none}
+      button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+      :focus-visible{outline:2px solid var(--orange);outline-offset:3px;border-radius:6px}
+
+      /* ---------- film grain + ambient glow ---------- */
+      .grain{
+        position:fixed;inset:-50%;width:200%;height:200%;pointer-events:none;z-index:2000;opacity:.05;
+        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url("data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==#hatch=%2523n")' opacity='1'/%3E%3C/svg%3E");
+        animation:grain 9s steps(6) infinite;
+      }
+      @keyframes grain{
+        0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}
+        40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,3%)}
+      }
+
+      /* ---------- preloader ---------- */
+      #loader{
+        position:fixed;inset:0;z-index:3000;background:#060607;
+        display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+        transition:opacity .6s ease,visibility .6s;
+      }
+      #loader.done{opacity:0;visibility:hidden}
+      #loader .mono{
+        font-family:var(--font-d);font-weight:700;font-size:clamp(3rem,10vw,5.5rem);
+        letter-spacing:.02em;line-height:1;color:var(--text);
+      }
+      #loader .mono span{color:var(--orange)}
+      #loader .bar{width:min(280px,70vw);height:2px;background:rgba(255,255,255,.12);overflow:hidden;border-radius:2px}
+      #loader .bar i{display:block;height:100%;width:0%;background:var(--orange)}
+      #loader .pct{font-size:.8rem;letter-spacing:.35em;color:var(--muted);text-transform:uppercase}
+
+      /* ---------- scroll progress + cursor glow ---------- */
+      #progress{position:fixed;top:0;left:0;height:3px;width:0%;background:var(--orange);z-index:1500}
+      #cursorGlow{
+        position:fixed;top:0;left:0;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;
+        pointer-events:none;z-index:1;opacity:0;transition:opacity .5s;
+        background:radial-gradient(circle,rgba(163,230,53,.09) 0%,transparent 65%);
+      }
+      body.has-cursor #cursorGlow{opacity:1}
+
+      /* ---------- nav ---------- */
+      header{
+        position:fixed;top:0;left:0;right:0;z-index:1000;
+        transition:background .35s,border-color .35s,backdrop-filter .35s;
+        border-bottom:1px solid transparent;
+      }
+      header.scrolled{background:rgba(8,8,10,.82);backdrop-filter:blur(14px);border-bottom-color:var(--line-soft)}
+      .nav{
+        max-width:1240px;margin:0 auto;padding:16px 24px;
+        display:flex;align-items:center;justify-content:space-between;gap:20px;
+      }
+      .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-d);font-weight:600;font-size:1.06rem;letter-spacing:.01em}
+      .brand .mark{
+        width:38px;height:38px;border-radius:11px;background:var(--orange);color:#0b0b0b;
+        display:grid;place-items:center;font-weight:700;font-size:.95rem;flex:none;
+        box-shadow:0 6px 22px rgba(163,230,53,.35);
+      }
+      .brand small{display:block;font-family:var(--font-b);font-weight:500;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+      .nav-links{display:flex;align-items:center;gap:30px}
+      .nav-links a{font-size:.92rem;font-weight:500;color:var(--muted);position:relative;padding:4px 0;transition:color .25s}
+      .nav-links a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--orange);transition:width .3s}
+      .nav-links a:hover{color:var(--text)}
+      .nav-links a:hover::after{width:100%}
+      .btn{
+        display:inline-flex;align-items:center;gap:9px;border-radius:999px;font-weight:700;
+        padding:12px 24px;font-size:.95rem;transition:transform .25s,box-shadow .25s,background .25s,color .25s;
+        will-change:transform;
+      }
+      .btn-orange{background:var(--orange);color:#0c0a08;box-shadow:0 8px 28px rgba(163,230,53,.28)}
+      .btn-orange:hover{background:var(--orange-2);box-shadow:0 12px 34px rgba(163,230,53,.4)}
+      .btn-ghost{border:1px solid var(--line);color:var(--text);background:rgba(255,255,255,.02)}
+      .btn-ghost:hover{border-color:rgba(163,230,53,.6);color:var(--orange-2)}
+      .btn-sm{padding:9px 18px;font-size:.88rem}
+      #burger{display:none;width:42px;height:42px;border:1px solid var(--line);border-radius:11px;place-items:center;flex:none}
+      #burger svg{width:20px;height:20px}
+      #mobileMenu{
+        display:none;flex-direction:column;gap:4px;padding:10px 24px 20px;
+        background:rgba(8,8,10,.97);border-bottom:1px solid var(--line-soft);
+      }
+      #mobileMenu.open{display:flex}
+      #mobileMenu a{padding:11px 6px;font-weight:600;font-size:1.02rem;border-bottom:1px solid var(--line-soft)}
+      #mobileMenu a:last-child{border-bottom:0}
+
+      /* ---------- layout helpers ---------- */
+      .wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+      section{padding:110px 0}
+      .sec-head{max-width:720px;margin-bottom:52px}
+      h2{
+        font-family:var(--font-d);font-weight:600;font-size:clamp(2rem,4.6vw,3.2rem);
+        line-height:1.08;letter-spacing:-.01em;
+      }
+      h2 .o{color:var(--orange)}
+      .sec-sub{color:var(--muted);margin-top:14px;font-size:1.05rem;max-width:56ch}
+
+      /* ---------- hero ---------- */
+      .hero{
+        padding:168px 0 90px;position:relative;overflow:hidden;
+        background:
+          radial-gradient(720px 420px at 85% -5%,rgba(163,230,53,.13),transparent 60%),
+          radial-gradient(600px 500px at -10% 110%,rgba(163,230,53,.06),transparent 60%),
+          var(--bg);
+      }
+      .hero-grid-lines{
+        position:absolute;inset:0;pointer-events:none;opacity:.5;
+        background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+        background-size:72px 72px;
+        mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 30%,transparent 75%);
+        -webkit-mask-image:radial-gradient(ellipse 90% 70% at 50% 30%,#000 30%,transparent 75%);
+      }
+      .hero-inner{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+      .avail{
+        display:inline-flex;align-items:center;gap:9px;padding:8px 16px;border-radius:999px;
+        border:1px solid rgba(163,230,53,.4);background:var(--orange-dim);
+        font-size:.82rem;font-weight:700;letter-spacing:.06em;color:var(--orange-2);
+      }
+      .avail .dot{width:8px;height:8px;border-radius:50%;background:#3ddc68;box-shadow:0 0 0 0 rgba(61,220,104,.5);animation:pulse 2s infinite}
+      @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(61,220,104,.45)}70%{box-shadow:0 0 0 9px rgba(61,220,104,0)}100%{box-shadow:0 0 0 0 rgba(61,220,104,0)}}
+      .hero h1{
+        font-family:var(--font-d);font-weight:700;text-transform:uppercase;
+        font-size:clamp(3rem,8.2vw,6.4rem);line-height:.98;letter-spacing:-.005em;margin:26px 0 8px;
+      }
+      .hero h1 .row{display:block;overflow:hidden}
+      .hero h1 .row > span{display:inline-block}
+      .hero h1 .stroke{color:transparent;-webkit-text-stroke:2px var(--text)}
+      .hero h1 .org{color:var(--orange)}
+      .hero .who{font-family:var(--font-d);font-weight:600;font-size:clamp(1.15rem,2.4vw,1.5rem);color:var(--text);margin-top:14px}
+      .hero .who span{color:var(--muted);font-weight:500}
+      .hero .lede{color:var(--muted);font-size:1.08rem;max-width:52ch;margin-top:14px}
+      .hero .lede strong{color:var(--text);font-weight:700}
+      .hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+      .hero-tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:30px}
+      .hero-tools span{
+        font-size:.78rem;font-weight:600;letter-spacing:.05em;color:var(--muted);
+        border:1px solid var(--line-soft);border-radius:999px;padding:6px 13px;background:rgba(255,255,255,.02);
+      }
+      .hero-photo{position:relative;display:flex;justify-content:center}
+      .photo-ring{position:relative;width:min(400px,84vw);aspect-ratio:1}
+      .photo-ring .spin{
+        position:absolute;inset:-26px;animation:spin 26s linear infinite;pointer-events:none;
+      }
+      @keyframes spin{to{transform:rotate(360deg)}}
+      .photo-ring .spin text{font-size:12.5px;font-weight:700;letter-spacing:4.5px;fill:var(--muted);text-transform:uppercase;font-family:var(--font-b)}
+      .photo-ring .spin .dotsep{fill:var(--orange)}
+      .photo-frame{
+        position:absolute;inset:0;border-radius:50%;overflow:hidden;
+        border:3px solid rgba(163,230,53,.85);
+        box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 10px rgba(163,230,53,.07),0 0 90px rgba(163,230,53,.16);
+      }
+      .photo-frame img{width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+      .chip{
+        position:absolute;display:flex;align-items:center;gap:9px;padding:10px 16px;border-radius:14px;
+        background:rgba(18,18,22,.88);border:1px solid var(--line);backdrop-filter:blur(8px);
+        font-size:.83rem;font-weight:700;box-shadow:0 16px 40px rgba(0,0,0,.45);z-index:3;white-space:nowrap;
+      }
+      .chip small{display:block;font-weight:500;color:var(--muted);font-size:.7rem;letter-spacing:.04em}
+      .chip .ic{width:32px;height:32px;border-radius:9px;background:var(--orange-dim);display:grid;place-items:center;flex:none}
+      .chip .ic svg{width:17px;height:17px;stroke:var(--orange-2)}
+      .chip-a{top:9%;left:-14%}
+      .chip-b{bottom:7%;right:-12%}
+      .stats{
+        display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line-soft);
+        border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden;margin-top:76px;
+      }
+      .stat{background:var(--bg-2);padding:26px 22px}
+      .stat b{font-family:var(--font-d);font-weight:700;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1;color:var(--text);display:flex;align-items:baseline;gap:2px}
+      .stat b .plus{color:var(--orange)}
+      .stat p{color:var(--muted);font-size:.88rem;margin-top:7px;font-weight:500}
+
+      /* ---------- marquee ---------- */
+      .marquee{
+        border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+        background:var(--bg-2);overflow:hidden;padding:20px 0;position:relative;z-index:2;
+      }
+      .marquee-track{display:flex;gap:0;width:max-content;animation:marq 30s linear infinite}
+      .marquee:hover .marquee-track{animation-play-state:paused}
+      .marquee-track span{
+        font-family:var(--font-d);font-weight:600;font-size:1.25rem;letter-spacing:.06em;text-transform:uppercase;
+        padding:0 26px;color:var(--text);white-space:nowrap;display:flex;align-items:center;gap:52px;
+      }
+      .marquee-track span::after{content:"✦";color:var(--orange);font-size:.95rem}
+      @keyframes marq{to{transform:translateX(-50%)}}
+
+      /* ---------- about ---------- */
+      .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:start}
+      .about-copy p{color:var(--muted);font-size:1.06rem;margin-bottom:18px}
+      .about-copy p strong{color:var(--text)}
+      .about-copy .sig{font-family:var(--font-d);font-weight:600;font-size:1.3rem;color:var(--text);margin-top:26px}
+      .about-copy .sig span{color:var(--orange)}
+      .fact-list{display:grid;gap:1px;background:var(--line-soft);border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden}
+      .fact{display:flex;justify-content:space-between;gap:18px;padding:17px 22px;background:var(--panel)}
+      .fact dt{color:var(--muted-2);font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding-top:2px}
+      .fact dd{font-weight:600;text-align:right}
+      .fact dd .o{color:var(--orange-2)}
+
+      /* ---------- services ---------- */
+      #services{background:var(--bg-2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+      .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+      .svc{
+        background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);padding:30px 26px;
+        position:relative;overflow:hidden;transition:transform .35s,border-color .35s;
+      }
+      .svc::before{
+        content:"";position:absolute;inset:0;opacity:0;transition:opacity .35s;
+        background:radial-gradient(340px 220px at 20% 0%,rgba(163,230,53,.13),transparent 65%);
+      }
+      .svc:hover{transform:translateY(-6px);border-color:rgba(163,230,53,.45)}
+      .svc:hover::before{opacity:1}
+      .svc .num{font-family:var(--font-d);font-weight:700;font-size:.95rem;color:var(--orange);letter-spacing:.1em}
+      .svc .ic{
+        width:50px;height:50px;border-radius:14px;background:var(--orange-dim);display:grid;place-items:center;margin:20px 0 16px;position:relative;z-index:1;
+      }
+      .svc .ic svg{width:24px;height:24px;stroke:var(--orange-2);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+      .svc h3{font-family:var(--font-d);font-weight:600;font-size:1.28rem;margin-bottom:9px;position:relative;z-index:1}
+      .svc p{color:var(--muted);font-size:.96rem;position:relative;z-index:1}
+
+      /* ---------- work ---------- */
+      .work-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+      .card{
+        background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);overflow:hidden;
+        text-align:left;width:100%;transition:transform .35s,border-color .35s,box-shadow .35s;position:relative;
+      }
+      .card:hover{transform:translateY(-6px);border-color:rgba(163,230,53,.5);box-shadow:0 24px 50px rgba(0,0,0,.5)}
+      .card.feature{grid-column:span 2}
+      .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+      .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+      .card:hover .thumb img{transform:scale(1.06)}
+      .thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.55))}
+      .play{
+        position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.85);z-index:2;
+        width:62px;height:62px;border-radius:50%;background:var(--orange);display:grid;place-items:center;
+        opacity:0;transition:opacity .3s,transform .3s;box-shadow:0 14px 34px rgba(163,230,53,.45);
+      }
+      .play svg{width:22px;height:22px;fill:#0c0a08;margin-left:3px}
+      .card:hover .play,.card:focus-visible .play{opacity:1;transform:translate(-50%,-50%) scale(1)}
+      .thumb .kind{
+        position:absolute;top:12px;left:12px;z-index:2;background:rgba(5,5,6,.72);backdrop-filter:blur(6px);
+        border:1px solid rgba(255,255,255,.14);color:#fff;font-size:.7rem;font-weight:700;letter-spacing:.12em;
+        text-transform:uppercase;padding:6px 11px;border-radius:999px;
+      }
+      .thumb iframe,.scard iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+      .thumb iframe{z-index:3}
+      .thumb .kind{z-index:4}
+      .thumb.playing .play{display:none}
+      .scard iframe{z-index:1}
+      .scard .shade{z-index:2;pointer-events:none}
+      .scard .smeta{z-index:3;pointer-events:none}
+      .scard .splay{z-index:3}
+      .scard.playing .splay{display:none}
+      .card-body{padding:18px 20px 20px}
+      .card-body h3{font-family:var(--font-d);font-weight:600;font-size:1.12rem;line-height:1.3}
+      .card-body p{color:var(--muted);font-size:.9rem;margin-top:5px}
+      .card-body .watch{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:.85rem;font-weight:700;color:var(--orange-2)}
+      .card-body .watch svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;transition:transform .25s}
+      .card:hover .watch svg{transform:translateX(4px)}
+
+      /* ---------- shorts ---------- */
+      #shorts{background:var(--bg-2);border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft)}
+      .shorts-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+      .scard{
+        border-radius:var(--radius);overflow:hidden;position:relative;border:1px solid var(--line-soft);
+        aspect-ratio:9/16;background:#000;text-align:left;width:100%;transition:transform .35s,border-color .35s;
+      }
+      .scard:hover{transform:translateY(-6px);border-color:rgba(163,230,53,.55)}
+      .scard img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+      .scard:hover img{transform:scale(1.07)}
+      .scard .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),transparent 35%,transparent 55%,rgba(0,0,0,.82))}
+      .scard .splay{
+        position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;
+        background:rgba(163,230,53,.92);display:grid;place-items:center;transition:transform .3s;
+      }
+      .scard:hover .splay{transform:scale(1.15)}
+      .scard .splay svg{width:14px;height:14px;fill:#0c0a08;margin-left:2px}
+      .scard .smeta{position:absolute;left:14px;right:14px;bottom:13px;z-index:2}
+      .scard .smeta b{font-family:var(--font-d);font-weight:600;font-size:.98rem;line-height:1.25;display:block}
+      .scard .smeta span{color:rgba(255,255,255,.72);font-size:.78rem;font-weight:500}
+
+      /* ---------- creator ---------- */
+      .creator{
+        border:1px solid var(--line-soft);border-radius:26px;overflow:hidden;position:relative;
+        background:
+          radial-gradient(640px 340px at 88% -10%,rgba(163,230,53,.16),transparent 60%),
+          var(--panel);
+        padding:clamp(30px,5vw,58px);
+        display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center;
+      }
+      .creator h2{font-size:clamp(1.8rem,3.8vw,2.7rem)}
+      .creator p{color:var(--muted);margin-top:14px;max-width:52ch}
+      .creator p strong{color:var(--text)}
+      .hit{
+        background:var(--bg-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:26px;
+      }
+      .hit .views{font-family:var(--font-d);font-weight:700;font-size:clamp(2.4rem,5vw,3.4rem);color:var(--orange);line-height:1}
+      .hit .views small{font-size:1.1rem;color:var(--text);font-weight:600}
+      .hit h3{font-family:var(--font-d);font-weight:600;font-size:1.15rem;margin-top:12px;line-height:1.35}
+      .hit p{font-size:.9rem;margin-top:6px}
+      .hit .series{margin-top:16px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:.9rem;color:var(--muted)}
+      .hit .series b{color:var(--text)}
+
+      /* ---------- CV ---------- */
+      #cv{background:var(--bg-2);border-top:1px solid var(--line-soft)}
+      .cv-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:start}
+      .timeline{position:relative;padding-left:30px}
+      .timeline::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:linear-gradient(180deg,var(--orange),rgba(163,230,53,.08))}
+      .job{position:relative;padding-bottom:34px}
+      .job:last-child{padding-bottom:4px}
+      .job::before{
+        content:"";position:absolute;left:-29px;top:7px;width:12px;height:12px;border-radius:50%;
+        background:var(--bg-2);border:3px solid var(--orange);
+      }
+      .job .when{font-size:.76rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--orange-2)}
+      .job h3{font-family:var(--font-d);font-weight:600;font-size:1.25rem;margin-top:5px}
+      .job h3 span{color:var(--muted);font-weight:500;font-size:1.02rem}
+      .job p{color:var(--muted);font-size:.95rem;margin-top:5px;max-width:52ch}
+      .cv-side{display:grid;gap:22px}
+      .cv-box{background:var(--panel);border:1px solid var(--line-soft);border-radius:var(--radius);padding:26px}
+      .cv-box h3{font-family:var(--font-d);font-weight:600;font-size:1.12rem;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+      .cv-box h3 svg{width:19px;height:19px;stroke:var(--orange-2);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+      .chips{display:flex;flex-wrap:wrap;gap:8px}
+      .chips span{
+        font-size:.85rem;font-weight:600;padding:8px 14px;border-radius:999px;
+        border:1px solid var(--line);background:rgba(255,255,255,.02);transition:border-color .25s,color .25s,transform .25s;
+      }
+      .chips span:hover{border-color:rgba(163,230,53,.6);color:var(--orange-2);transform:translateY(-2px)}
+      .edu p{color:var(--muted);font-size:.95rem}
+      .edu p b{color:var(--text)}
+
+      /* ---------- contact / footer ---------- */
+      .contact{text-align:center;padding:120px 0 90px;position:relative;overflow:hidden}
+      .contact::before{
+        content:"";position:absolute;inset:0;pointer-events:none;
+        background:radial-gradient(700px 380px at 50% 115%,rgba(163,230,53,.14),transparent 65%);
+      }
+      .contact h2{font-size:clamp(2.4rem,6.5vw,4.4rem);text-transform:uppercase;font-weight:700;line-height:1.02}
+      .contact p{color:var(--muted);margin:18px auto 0;max-width:52ch}
+      .contact .hero-ctas{justify-content:center}
+      .socials{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:44px;position:relative;z-index:2}
+      .socials a{
+        display:inline-flex;align-items:center;gap:9px;padding:11px 20px;border-radius:999px;
+        border:1px solid var(--line);font-weight:600;font-size:.92rem;transition:border-color .25s,color .25s,transform .25s;background:rgba(255,255,255,.02);
+      }
+      .socials a:hover{border-color:rgba(163,230,53,.6);color:var(--orange-2);transform:translateY(-3px)}
+      .socials svg{width:17px;height:17px;fill:currentColor}
+      footer{border-top:1px solid var(--line-soft);padding:26px 0;position:relative;z-index:2;background:var(--bg)}
+      .foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;color:var(--muted-2);font-size:.86rem}
+      .foot b{color:var(--muted)}
+
+      /* ---------- reveal defaults (JS animates from these) ---------- */
+      .rv{opacity:1}
+
+      /* ---------- responsive ---------- */
+      @media (max-width:1080px){
+        .hero-inner{grid-template-columns:1fr .8fr;gap:40px}
+        .chip-a{left:-4%}
+        .chip-b{right:-3%}
+        .svc-grid{grid-template-columns:repeat(2,1fr)}
+        .work-grid{grid-template-columns:repeat(2,1fr)}
+        .card.feature{grid-column:span 2}
+        .shorts-grid{grid-template-columns:repeat(3,1fr)}
+        .creator{grid-template-columns:1fr}
+      }
+      @media (max-width:860px){
+        section{padding:78px 0}
+        .nav-links{display:none}
+        #burger{display:grid}
+        .hero{padding:132px 0 70px}
+        .hero-inner{grid-template-columns:1fr;gap:64px}
+        .hero-photo{order:-1}
+        .photo-ring{width:min(300px,76vw)}
+        .stats{grid-template-columns:repeat(2,1fr);margin-top:56px}
+        .about-grid,.cv-grid{grid-template-columns:1fr;gap:44px}
+        .shorts-grid{grid-template-columns:repeat(2,1fr)}
+        .contact{padding:84px 0 70px}
+      }
+      @media (max-width:560px){
+        .wrap{padding:0 18px}
+        .nav{padding:13px 18px}
+        .brand small{display:none}
+        .svc-grid,.work-grid{grid-template-columns:1fr}
+        .card.feature{grid-column:span 1}
+        .chip-a{left:-2%;top:2%}
+        .chip-b{right:-2%;bottom:2%}
+        .chip{padding:8px 12px;font-size:.76rem}
+        .hero-ctas .btn{width:100%;justify-content:center}
+        .stat{padding:20px 16px}
+      }
+      @media (prefers-reduced-motion:reduce){
+        *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
+        html{scroll-behavior:auto}
+        .marquee-track{animation:none;flex-wrap:wrap;width:auto}
+      }
+    </style>
+    <style data-hatch-cvm-bundle></style>
+</head>
+  <body>
+    <!-- Preloader -->
+    <div id="loader" aria-hidden="true">
+      <div class="mono">H<span>.</span>A</div>
+      <div class="bar"><i id="loadBar"></i></div>
+      <div class="pct"><span id="loadPct">0</span>% — Loading Portfolio</div>
+    </div>
+
+    <div class="grain" aria-hidden="true"></div>
+    <div id="progress" aria-hidden="true"></div>
+    <div id="cursorGlow" aria-hidden="true"></div>
+
+    <!-- Nav -->
+    <header id="siteHeader">
+      <nav class="nav" aria-label="Main">
+        <a class="brand" href="#top" aria-label="Huzaifa Aslam — home">
+          <span class="mark">HA</span>
+          <span>Huzaifa Aslam<small>Video Editor · Creator</small></span>
+        </a>
+        <div class="nav-links">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#shorts">Shorts</a>
+          <a href="#cv">CV</a>
+          <a href="assets/Huzaifa-Aslam-CV.pdf" download="Huzaifa-Aslam-CV.pdf">Download CV</a>
+          <a class="btn btn-orange btn-sm magnetic" href="https://wa.me/923307185888?text=Hi%20Huzaifa!%20I%20saw%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20video%20editing%20project." target="_blank" rel="noopener">Hire Me</a>
+        </div>
+        <button id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </nav>
+      <div id="mobileMenu">
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#shorts">Shorts</a>
+        <a href="#creator">My Channel</a>
+        <a href="#cv">CV</a>
+        <a href="assets/Huzaifa-Aslam-CV.pdf" download="Huzaifa-Aslam-CV.pdf">Download CV (PDF)</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </header>
+
+    <main id="top">
+      <!-- ============ HERO ============ -->
+      <section class="hero">
+        <div class="hero-grid-lines" aria-hidden="true"></div>
+        <div class="wrap">
+          <div class="hero-inner">
+            <div>
+              <span class="avail rv"><span class="dot"></span> Available for new projects</span>
+              <h1 aria-label="I make clean edits">
+                <span class="row"><span>I Make</span></span>
+                <span class="row"><span class="org">Clean</span></span>
+                <span class="row"><span class="stroke">Edits.</span></span>
+              </h1>
+              <p class="who rv">Huzaifa Aslam <span>— Senior Video Editor &amp; Content Creator</span></p>
+              <p class="lede rv">
+                Four years of cutting documentaries, talking-head videos and scroll-stopping reels
+                for brands and creators across the <strong>USA, UAE, Canada &amp; Europe</strong> —
+                and the founder of <strong>Cine Graphix Studio</strong>, Lahore.
+              </p>
+              <div class="hero-ctas rv">
+                <a class="btn btn-orange magnetic" href="#work">Watch My Work
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+                </a>
+                <a class="btn btn-ghost magnetic" href="assets/Huzaifa-Aslam-CV.pdf" download="Huzaifa-Aslam-CV.pdf">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+                  Download CV
+                </a>
+              </div>
+              <div class="hero-tools rv" aria-label="Tools I work in">
+                <span>Premiere Pro</span><span>After Effects</span><span>Photoshop</span>
+                <span>Illustrator</span><span>CapCut Pro</span><span>Canva</span>
+              </div>
+            </div>
+
+            <div class="hero-photo rv">
+              <div class="photo-ring" id="photoRing">
+                <svg class="spin" viewBox="0 0 200 200" aria-hidden="true">
+                  <defs><path id="circlePath" d="M100,100 m-88,0 a88,88 0 1,1 176,0 a88,88 0 1,1 -176,0"/></defs>
+                  <text><textPath href="#circlePath">Video Editor <tspan class="dotsep">✦</tspan> Content Creator <tspan class="dotsep">✦</tspan> Cine Graphix <tspan class="dotsep">✦</tspan> </textPath></text>
+                </svg>
+                <div class="photo-frame">
+                  <img data-hatch-src="assets/profile.jpg" alt="Stylized portrait of Huzaifa Aslam, video editor" width="880" height="880" />
+                </div>
+                <div class="chip chip-a">
+                  <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></span>
+                  <span>4+ Years<small>Editing Experience</small></span>
+                </div>
+                <div class="chip chip-b">
+                  <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5l5 2.5-5 2.5z" fill="currentColor"/></svg></span>
+                  <span>Documentaries<small>&amp; YouTube Content</small></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stats rv" role="list" aria-label="Career highlights">
+            <div class="stat" role="listitem"><b><span class="count" data-target="4">4</span><span class="plus">+</span></b><p>Years in the industry</p></div>
+            <div class="stat" role="listitem"><b><span class="count" data-target="15">15</span></b><p>Selected projects featured below</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MARQUEE ============ -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track" id="marqueeTrack">
+          <span>Documentary Edits</span><span>Talking-Head Videos</span><span>Typography Reels</span>
+          <span>YouTube Automation</span><span>Cashcow Videos</span><span>Hooks &amp; Retention</span>
+          <span>Podcasts</span><span>Thumbnails</span>
+        </div>
+      </div>
+
+      <!-- ============ ABOUT ============ -->
+      <section id="about">
+        <div class="wrap">
+          <div class="sec-head rv">
+            <h2>Editor first. <span class="o">Creator</span> too.</h2>
+          </div>
+          <div class="about-grid">
+            <div class="about-copy rv">
+              <p>
+                I'm <strong>Huzaifa Aslam</strong>, a senior video editor based in Lahore, Pakistan.
+                Over the last <strong>4 years</strong> I've edited for agencies, media houses and
+                international clients — from long-form documentaries and podcasts to fast,
+                hook-driven reels built to stop the scroll.
+              </p>
+              <p>
+                I currently work as a <strong>Senior Video Editor at Timetechnologiesllc</strong> and run
+                <strong> Cine Graphix Studio</strong>, my own studio in Samanabad, Lahore. Alongside client
+                work, I create content for my own YouTube channel — Urdu documentaries on Pakistan's
+                governance, politics and untold stories — so I don't just edit for the algorithm,
+                I publish for it too.
+              </p>
+              <p>
+                My edge is simple: clean cuts, honest pacing, and hooks that earn the next ten seconds.
+              </p>
+              <p class="sig">— Huzaifa Aslam, <span>Founder, Cine Graphix Studio</span></p>
+            </div>
+            <dl class="fact-list rv">
+              <div class="fact"><dt>Based in</dt><dd>Lahore, Pakistan</dd></div>
+              <div class="fact"><dt>Currently</dt><dd>Senior Video Editor, <span class="o">Timetechnologiesllc</span></dd></div>
+              <div class="fact"><dt>Studio</dt><dd>Cine Graphix Studio, Samanabad</dd></div>
+              <div class="fact"><dt>Also founder</dt><dd>Cine Graphix Skool</dd></div>
+              <div class="fact"><dt>Education</dt><dd>BS Digital Media, University of Punjab</dd></div>
+              <div class="fact"><dt>Markets served</dt><dd>USA · UAE · Canada · Europe · Pakistan</dd></div>
+              <div class="fact"><dt>Languages</dt><dd>Urdu · English</dd></div>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SERVICES ============ -->
+      <section id="services">
+        <div class="wrap">
+          <div class="sec-head rv">
+            <h2>Six crafts. One goal — <span class="o">attention</span> that stays.</h2>
+            <p class="sec-sub">Every project is edited for retention first: the hook, the pacing, the payoff.</p>
+          </div>
+          <div class="svc-grid">
+            <article class="svc rv">
+              <span class="num">01</span>
+              <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 9h18M7 5v14M17 5v14"/></svg></span>
+              <h3>Documentary Editing</h3>
+              <p>Research-driven long-form documentaries with cinematic structure, pacing and sound — the format my own channel is built on.</p>
+            </article>
+            <article class="svc rv">
+              <span class="num">02</span>
+              <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.8-3.4 3.6-5 7-5s6.2 1.6 7 5"/></svg></span>
+              <h3>Talking-Head &amp; Podcasts</h3>
+              <p>Polished talking-head and podcast edits where every word lands — clean cuts, captions, b-roll and graphics that keep faces watchable.</p>
+            </article>
+            <article class="svc rv">
+              <span class="num">03</span>
+              <span class="ic"><svg viewBox="0 0 24 24"><path d="M5 5h14M12 5v14M9 19h6"/></svg></span>
+              <h3>Typography Reels &amp; Shorts</h3>
+              <p>Kinetic type, punchy captions and rhythm-cut vertical videos — reels and Shorts designed for the first three seconds.</p>
+            </article>
+            <article class="svc rv">
+              <span class="num">04</span>
+              <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="3"/><path d="M16 10.5l5-2.5v8l-5-2.5"/></svg></span>
+              <h3>YouTube Automation</h3>
+              <p>Full faceless-channel production: scripting support, voiceover edits, stock and b-roll assembly, delivered ready to upload.</p>
+            </article>
+            <article class="svc rv">
+              <span class="num">05</span>
+              <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="2.6"/></svg></span>
+              <h3>Hooks &amp; Retention Editing</h3>
+              <p>Cold opens, pattern interrupts and cliff-hanger pacing — edits engineered around audience-retention graphs, not guesswork.</p>
+            </article>
+            <article class="svc rv">
+              <span class="num">06</span>
+              <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M4 18l5-4 3.5 3L16 13l4 4"/></svg></span>
+              <h3>Cashcow &amp; Thumbnails</h3>
+              <p>Faceless cashcow videos plus bold, clickable thumbnail design in Photoshop — packaging that wins the click before the play.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ LONG-FORM WORK ============ -->
+      <section id="work">
+        <div class="wrap">
+          <div class="sec-head rv">
+            <h2>Selected <span class="o">long-form</span> projects</h2>
+            <p class="sec-sub">Every long-form edit in one place — podcasts, explainers, finance and creator channels. Videos start playing automatically (muted) as you scroll; tap any video for sound and full controls.</p>
+          </div>
+          <div class="work-grid" id="workGrid"><!-- cards injected by script --></div>
+        </div>
+      </section>
+
+      <!-- ============ SHORTS ============ -->
+      <section id="shorts">
+        <div class="wrap">
+          <div class="sec-head rv">
+            <h2>Reels &amp; Shorts, <span class="o">built to loop</span></h2>
+            <p class="sec-sub">Every short-form edit in one place — raw-to-delivered transformations, brand reels and animated explainers. Each one autoplays muted on a loop as you scroll; tap for sound.</p>
+          </div>
+          <div class="shorts-grid" id="shortsGrid"><!-- cards injected by script --></div>
+        </div>
+      </section>
+
+      <!-- ============ CREATOR ============ -->
+      <section id="creator">
+        <div class="wrap">
+          <div class="creator rv">
+            <div>
+              <h2>I don't just edit content. <span class="o">I create it.</span></h2>
+              <p>
+                On my YouTube channel <strong>Huzaifa Aslam Rajputt</strong>, I write, narrate and edit
+                Urdu documentaries — personality stories, political history and everyday governance
+                in Pakistan. It's where my documentary craft gets tested in public, every upload.
+              </p>
+              <div class="hero-ctas">
+                <a class="btn btn-orange magnetic" href="https://www.youtube.com/@huzaifaaslamrajputt" target="_blank" rel="noopener">Visit My Channel</a>
+              </div>
+            </div>
+            <div class="hit">
+              <div class="views"><span class="count" data-target="33">33</span>K<small>+ views &amp; climbing</small></div>
+              <h3>“Imran Khan: The Rise &amp; Fall — Is This the End?”</h3>
+              <p>My breakout political documentary — researched, narrated and edited end-to-end by me.</p>
+              <div class="series">Now running: <b>“Everyday Governance in Pakistan”</b> — an ongoing documentary series on how the country actually runs.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CV ============ -->
+      <section id="cv">
+        <div class="wrap">
+          <div class="sec-head rv">
+            <h2>Four years, <span class="o">five teams</span>, one craft</h2>
+            <p class="sec-sub">Senior Video Editor with a BS in Digital Media from the University of Punjab (2022–2026) — editing for agencies, media houses and international clients since 2022.</p>
+          </div>
+          <div class="cv-grid">
+            <div class="timeline rv">
+              <div class="job">
+                <span class="when">Current Role</span>
+                <h3>Senior Video Editor <span>· Timetechnologiesllc</span></h3>
+                <p>Leading video edits for client content — long-form, short-form and branded video delivered to production standard.</p>
+              </div>
+              <div class="job">
+                <span class="when">Media House</span>
+                <h3>Senior Video Editor &amp; On-Camera <span>· Pakistan Matters</span></h3>
+                <p>Senior edit role on a news &amp; current-affairs platform, including on-camera presentation.</p>
+              </div>
+              <div class="job">
+                <span class="when">Remote · International</span>
+                <h3>Video Editor <span>· Visual Vortex</span></h3>
+                <p>Remote editing for foreign clients — the foundation of my international client work across the USA, UAE, Canada and Europe.</p>
+              </div>
+              <div class="job">
+                <span class="when">Strategy</span>
+                <h3>Content Strategist <span>· Apparitex</span></h3>
+                <p>Content strategy and planning — the thinking behind what gets made, not just how it gets cut.</p>
+              </div>
+              <div class="job">
+                <span class="when">Starting Out</span>
+                <h3>Design Intern <span>· Zephyrsols</span></h3>
+                <p>Where the visual foundation was built — design principles that still shape every frame I edit.</p>
+              </div>
+            </div>
+            <div class="cv-side">
+              <div class="cv-box rv">
+                <h3><svg viewBox="0 0 24 24"><path d="M4 7h13a3 3 0 013 3v8H7a3 3 0 01-3-3z"/><path d="M4 7v8M17 4H7a3 3 0 00-3 3"/></svg>Toolbox</h3>
+                <div class="chips">
+                  <span>Adobe Premiere Pro</span><span>After Effects</span><span>Photoshop</span>
+                  <span>Illustrator</span><span>CapCut Pro</span><span>Canva</span>
+                </div>
+              </div>
+              <div class="cv-box rv">
+                <h3><svg viewBox="0 0 24 24"><path d="M12 3l2.1 5.3L20 9l-4.2 3.8L17 18.5 12 15.7 7 18.5l1.2-5.7L4 9l5.9-.7z"/></svg>Expertise</h3>
+                <div class="chips">
+                  <span>Documentary Edits</span><span>Engaging Hooks</span><span>Typography Reels</span>
+                  <span>Cashcow Videos</span><span>YouTube Automation</span><span>Retention Pacing</span>
+                  <span>Thumbnail Design</span><span>Podcast Editing</span>
+                </div>
+              </div>
+              <div class="cv-box edu rv">
+                <h3><svg viewBox="0 0 24 24"><path d="M12 4L2 9l10 5 10-5z"/><path d="M6 11.5V16c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5M22 9v5"/></svg>Education</h3>
+                <p><b>BS Digital Media</b> — University of Punjab, Lahore<br />2022 – 2026</p>
+              </div>
+              <a class="btn btn-orange magnetic" style="justify-content:center" href="assets/Huzaifa-Aslam-CV.pdf" download="Huzaifa-Aslam-CV.pdf">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4M4 20h16"/></svg>
+                Download Full CV (PDF)
+              </a>
+              <a class="btn btn-ghost magnetic" style="justify-content:center" href="mailto:aslamhuzaifa5@gmail.com?subject=CV%20Request%20—%20Huzaifa%20Aslam">Request CV by Email</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section class="contact" id="contact">
+        <div class="wrap">
+          <h2 class="rv">Let's make it<br /><span style="color:var(--orange)">unskippable.</span></h2>
+          <p class="rv">Documentary, podcast, reels or a full YouTube channel — tell me what you're building and I'll bring the clean edits. Fastest reply on WhatsApp.</p>
+          <div class="hero-ctas rv">
+            <a class="btn btn-orange magnetic" href="https://wa.me/923307185888?text=Hi%20Huzaifa!%20I%20saw%20your%20portfolio%20and%20I%27d%20like%20to%20discuss%20a%20video%20editing%20project." target="_blank" rel="noopener">Chat on WhatsApp</a>
+            <a class="btn btn-ghost magnetic" href="mailto:aslamhuzaifa5@gmail.com">aslamhuzaifa5@gmail.com</a>
+          </div>
+          <div class="socials rv">
+            <a href="https://www.youtube.com/@huzaifaaslamrajputt" target="_blank" rel="noopener" aria-label="YouTube channel">
+              <svg viewBox="0 0 24 24"><path d="M23 7.2s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.4-1C16.6 3.6 12 3.6 12 3.6s-4.6 0-7.7.3c-.5.1-1.5.1-2.4 1-.7.7-.9 2.3-.9 2.3S.8 9.1.8 11v1.8c0 1.9.2 3.8.2 3.8s.2 1.6.9 2.3c.9.9 2 .9 2.6 1 1.9.2 7.5.3 7.5.3s4.6 0 7.7-.4c.5-.1 1.5-.1 2.4-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.8V11c0-1.9-.2-3.8-.2-3.8zM9.8 15.1V8.4l6.2 3.4-6.2 3.3z"/></svg>
+              YouTube
+            </a>
+            <a href="https://www.instagram.com/cinegraphixstudio_" target="_blank" rel="noopener" aria-label="Instagram — Cine Graphix Studio">
+              <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.9-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8C2.4 4 4 2.4 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.9A6.1 6.1 0 105.9 12 6.1 6.1 0 0012 5.9zm0 10.1A4 4 0 1116 12a4 4 0 01-4 4zm7.9-10.3a1.4 1.4 0 11-1.4-1.4 1.4 1.4 0 011.4 1.4z"/></svg>
+              Instagram
+            </a>
+            <a href="https://www.linkedin.com/in/huzaifa-aslam-6a6b52368" target="_blank" rel="noopener" aria-label="LinkedIn profile">
+              <svg viewBox="0 0 24 24"><path d="M20.4 20.4h-3.5v-5.6c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6h.1a3.7 3.7 0 013.3-1.8c3.6 0 4.2 2.3 4.2 5.4zM5.3 7.4a2 2 0 112-2 2 2 0 01-2 2zM7.1 20.4H3.6V9h3.5zM22.2 0H1.8A1.8 1.8 0 000 1.7v20.6A1.8 1.8 0 001.8 24h20.4a1.8 1.8 0 001.8-1.7V1.7A1.8 1.8 0 0022.2 0z"/></svg>
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="wrap foot">
+        <span>© 2026 <b>Huzaifa Aslam</b> · Cine Graphix Studio</span>
+        <span>Samanabad, Lahore, Pakistan — editing for clients worldwide</span>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" data-hatch-cvm-external></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" data-hatch-cvm-external></script>
+    
+  <script data-hatch-cvm-bundle>(() => {
+  var __defProp = Object.defineProperty;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  function __accessProp(key) {
+    return this[key];
+  }
+  var __toCommonJS = (from) => {
+    var entry = (__moduleCache ??= new WeakMap).get(from), desc;
+    if (entry)
+      return entry;
+    entry = __defProp({}, "__esModule", { value: true });
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (var key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(entry, key))
+          __defProp(entry, key, {
+            get: __accessProp.bind(from, key),
+            enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable
+          });
+    }
+    __moduleCache.set(from, entry);
+    return entry;
+  };
+  var __moduleCache;
+
+  // src/prelude.ts
+  var exports_prelude = {};
+
+  // src/tunnel-url.ts
+  var B64_CHUNK = 32768;
+  function computeSelfBaseDir(selfHref) {
+    if (!selfHref)
+      return "";
+    let h = selfHref;
+    const hash = h.indexOf("#");
+    if (hash >= 0)
+      h = h.slice(0, hash);
+    const q = h.indexOf("?");
+    if (q >= 0)
+      h = h.slice(0, q);
+    const slash = h.lastIndexOf("/");
+    return slash >= 0 ? h.slice(0, slash + 1) : "";
+  }
+  function isSelfOriginUrl(u, selfBaseDir, selfHref, objectUrls) {
+    if (!selfBaseDir || !u.startsWith(selfBaseDir))
+      return false;
+    if (u === selfHref)
+      return false;
+    return !objectUrls.has(u);
+  }
+  function isExternalUrl(u, selfBaseDir, selfHref, objectUrls) {
+    if (!u)
+      return false;
+    if (u.startsWith("#"))
+      return true;
+    if (isSelfOriginUrl(u, selfBaseDir, selfHref, objectUrls))
+      return false;
+    if (u.startsWith("data:") || u.startsWith("blob:"))
+      return true;
+    if (u.startsWith("about:") || u.startsWith("javascript:"))
+      return true;
+    if (u.startsWith("//"))
+      return true;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(u)) {
+      return true;
+    }
+    return false;
+  }
+  function normalizeToRelPath(u, selfBaseDir) {
+    let s = u;
+    if (selfBaseDir && s.startsWith(selfBaseDir)) {
+      s = s.slice(selfBaseDir.length);
+    }
+    s = s.replace(/^\.\//, "");
+    s = s.replace(/^\/+/, "");
+    return s;
+  }
+  function blobInner(base, NativeURL) {
+    if (base == null)
+      return null;
+    const s = typeof base === "string" ? base : base instanceof NativeURL ? base.href : String(base);
+    return s.startsWith("blob:") ? s.slice("blob:".length) : null;
+  }
+  var OPAQUE_BLOB_ORIGIN = "https://hatch-cvm-opaque.invalid";
+  function isAbsoluteUrlString(s, NativeURL) {
+    try {
+      new NativeURL(s);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  function resolveAgainstBlobBase(u, base, NativeURL) {
+    const inner = blobInner(base, NativeURL);
+    if (inner === null)
+      return null;
+    if (isAbsoluteUrlString(inner, NativeURL)) {
+      return new NativeURL("blob:" + new NativeURL(u, inner).href);
+    }
+    const slash = inner.indexOf("/");
+    const token = slash >= 0 ? inner.slice(0, slash) : inner;
+    const path = slash >= 0 ? inner.slice(slash) : "/";
+    const resolved = new NativeURL(u, OPAQUE_BLOB_ORIGIN + path);
+    return new NativeURL("blob:" + token + resolved.pathname + resolved.search + resolved.hash);
+  }
+  function resolveTunnelUrl(url, base, selfHref, NativeURL) {
+    const u = url == null ? "" : typeof url === "string" ? url : url instanceof NativeURL ? url.href : String(url);
+    const uAbsolute = /^[a-z][a-z0-9+.-]*:/i.test(u) || u.startsWith("//");
+    if (base !== undefined && base !== null && !uAbsolute) {
+      const viaBlob = resolveAgainstBlobBase(u, base, NativeURL);
+      if (viaBlob !== null)
+        return viaBlob;
+      return new NativeURL(u, base);
+    }
+    if (!uAbsolute && selfHref) {
+      const viaBlob = resolveAgainstBlobBase(u, selfHref, NativeURL);
+      if (viaBlob !== null)
+        return viaBlob;
+    }
+    return base === undefined ? new NativeURL(u) : new NativeURL(u, base);
+  }
+  function bytesToBase64(bytes) {
+    const u8 = bytes instanceof Uint8Array ? bytes : new Uint8Array(bytes);
+    let s = "";
+    for (let i = 0;i < u8.length; i += B64_CHUNK) {
+      s += String.fromCharCode.apply(null, Array.from(u8.subarray(i, i + B64_CHUNK)));
+    }
+    return btoa(s);
+  }
+  function base64ToBytes(b64) {
+    const bin = atob(b64);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0;i < bin.length; i++)
+      out[i] = bin.charCodeAt(i);
+    return out;
+  }
+  function importMetaUrl(selfHref, selfBaseDir) {
+    return selfBaseDir ? `${selfBaseDir}assets/cvm-bundle.js` : selfHref;
+  }
+
+  // src/download-links.ts
+  function installDownloadLinks(fetchAsset, isExternalUrl, revokeDelayMs) {
+    document.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        return;
+      const anchor = event.composedPath().find((node) => node instanceof HTMLAnchorElement);
+      if (!anchor?.hasAttribute("download"))
+        return;
+      const href = anchor.getAttribute("href");
+      if (!href || isExternalUrl(href))
+        return;
+      event.preventDefault();
+      const filename = anchor.download || resourceFilename(href);
+      (async () => {
+        const response = await fetchAsset(href);
+        if (!response.ok) {
+          throw new Error(`Artifact download failed: HTTP ${response.status}`);
+        }
+        const url = URL.createObjectURL(await response.blob());
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = filename;
+        link.hidden = true;
+        document.body.appendChild(link);
+        try {
+          link.click();
+        } finally {
+          link.remove();
+          setTimeout(() => URL.revokeObjectURL(url), revokeDelayMs);
+        }
+      })().catch((error) => reportError(error));
+    });
+  }
+  function resourceFilename(href) {
+    const path = new URL(href, document.baseURI).pathname;
+    const name = path.slice(path.lastIndexOf("/") + 1);
+    try {
+      return decodeURIComponent(name);
+    } catch {
+      return name;
+    }
+  }
+
+  // src/fragment-links.ts
+  function installFragmentLinks() {
+    if (!location.href.startsWith("blob:null/"))
+      return;
+    const NativeURL = URL;
+    const pushState = history.pushState.bind(history);
+    const replaceState = history.replaceState.bind(history);
+    window.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+        return;
+      const anchor = event.composedPath().find((node) => node instanceof HTMLAnchorElement);
+      if (!anchor || anchor.hasAttribute("download"))
+        return;
+      const targetName = anchor.getAttribute("target") ?? document.querySelector("base[target]")?.getAttribute("target") ?? "";
+      if (targetName !== "" && targetName.toLowerCase() !== "_self")
+        return;
+      const href = anchor.getAttribute("href");
+      if (!href?.startsWith("#"))
+        return;
+      const oldURL = location.href;
+      const nextURL = new NativeURL(href, oldURL);
+      event.preventDefault();
+      const changed = nextURL.href !== oldURL;
+      if (changed) {
+        pushState(null, "", nextURL.href);
+      } else {
+        replaceState(null, "", nextURL.href);
+      }
+      window.dispatchEvent(new PopStateEvent("popstate", { state: null }));
+      const target = fragmentTarget(nextURL.hash);
+      if (target) {
+        target.scrollIntoView();
+        if (target !== document.documentElement && (target instanceof HTMLElement || target instanceof SVGElement)) {
+          const hadTabIndex = target.hasAttribute("tabindex");
+          if (!hadTabIndex)
+            target.setAttribute("tabindex", "-1");
+          target.focus({ preventScroll: true });
+          if (!hadTabIndex)
+            target.removeAttribute("tabindex");
+        }
+      }
+      if (changed) {
+        queueMicrotask(() => window.dispatchEvent(new HashChangeEvent("hashchange", {
+          oldURL,
+          newURL: nextURL.href
+        })));
+      }
+    });
+  }
+  function fragmentTarget(hash) {
+    const bytes = hash.slice(1).replace(/%([0-9a-f]{2})/gi, (_match, hex) => String.fromCharCode(parseInt(hex, 16)));
+    const fragment = new TextDecoder().decode(Uint8Array.from(bytes, (byte) => byte.charCodeAt(0)));
+    if (fragment === "")
+      return document.documentElement;
+    const idTarget = document.getElementById(fragment);
+    if (idTarget)
+      return idTarget;
+    const namedTarget = Array.from(document.getElementsByName(fragment)).find((node) => node instanceof HTMLAnchorElement);
+    return namedTarget ?? (fragment.toLowerCase() === "top" ? document.documentElement : null);
+  }
+
+  // src/prelude.ts
+  (function installTunnel() {
+    installFragmentLinks();
+    let port = null;
+    let portReadyResolve = null;
+    const portReady = new Promise((res) => {
+      portReadyResolve = res;
+    });
+    const pending = new Map;
+    const openWs = new Map;
+    function newId() {
+      return Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+    }
+    function bytesToB64(bytes) {
+      return bytesToBase64(bytes);
+    }
+    function b64ToBytes(b64) {
+      return base64ToBytes(b64);
+    }
+    async function httpReq(method, path, body, headers) {
+      const p = port ?? await portReady;
+      const id = newId();
+      const headerArr = [];
+      if (headers) {
+        const h = new Headers(headers);
+        h.forEach((v, k) => headerArr.push([k, v]));
+      }
+      let bodyB64 = "";
+      if (body != null && body !== "") {
+        let bytes;
+        if (typeof body === "string") {
+          bytes = new TextEncoder().encode(body);
+        } else if (body instanceof ArrayBuffer) {
+          bytes = new Uint8Array(body);
+        } else if (body instanceof Uint8Array) {
+          bytes = body;
+        } else if (body instanceof Blob) {
+          bytes = new Uint8Array(await body.arrayBuffer());
+        } else if (body instanceof FormData) {
+          const boundary = "----HatchBoundary" + Math.random().toString(36).slice(2);
+          let s = "";
+          for (const [k, v] of body.entries()) {
+            s += `--${boundary}\r
+Content-Disposition: form-data; name="${k}"`;
+            if (v instanceof File) {
+              s += `; filename="${v.name}"\r
+Content-Type: ${v.type || "application/octet-stream"}\r
+\r
+`;
+              const fb = new Uint8Array(await v.arrayBuffer());
+              s += new TextDecoder("latin1").decode(fb);
+            } else {
+              s += `\r
+\r
+${v}`;
+            }
+            s += `\r
+`;
+          }
+          s += `--${boundary}--\r
+`;
+          bytes = new TextEncoder().encode(s);
+          headerArr.push([
+            "content-type",
+            `multipart/form-data; boundary=${boundary}`
+          ]);
+        } else {
+          bytes = new TextEncoder().encode(String(body));
+        }
+        bodyB64 = bytesToB64(bytes);
+      }
+      return new Promise((resolve, reject) => {
+        pending.set(id, {
+          resolve: (msg) => {
+            if (msg.error) {
+              reject(new Error(msg.error.message ?? "tunnel error"));
+              return;
+            }
+            resolve({
+              status: msg.status,
+              headers: msg.headers,
+              bytes: msg.bodyB64 ? b64ToBytes(msg.bodyB64) : new Uint8Array(0)
+            });
+          },
+          reject
+        });
+        p.postMessage({
+          type: "http.req",
+          id,
+          method,
+          path,
+          headers: headerArr,
+          bodyB64
+        });
+      });
+    }
+    async function tunnelFetch(input, init) {
+      let urlStr;
+      let method = init?.method ?? "GET";
+      let headers = init?.headers;
+      let body = init?.body;
+      if (input instanceof Request) {
+        urlStr = input.url;
+        method = init?.method ?? input.method;
+        headers = init?.headers ?? input.headers;
+        if (body == null && input.body) {
+          body = await input.arrayBuffer();
+        }
+      } else {
+        urlStr = String(input);
+      }
+      if (isExternalUrl2(urlStr)) {
+        return originalFetch(input, init);
+      }
+      const relPath = normalizeToRelPath2(urlStr);
+      const r = await httpReq(method, relPath, body ?? null, headers);
+      const respHeaders = new Headers;
+      for (const [k, v] of r.headers ?? [])
+        respHeaders.set(k, v);
+      return new Response(r.bytes, {
+        status: r.status,
+        headers: respHeaders
+      });
+    }
+
+    class TunnelWebSocket extends EventTarget {
+      readyState = 0;
+      static CONNECTING = 0;
+      static OPEN = 1;
+      static CLOSING = 2;
+      static CLOSED = 3;
+      CONNECTING = 0;
+      OPEN = 1;
+      CLOSING = 2;
+      CLOSED = 3;
+      url;
+      binaryType = "blob";
+      bufferedAmount = 0;
+      protocol = "";
+      extensions = "";
+      onopen = null;
+      onmessage = null;
+      onclose = null;
+      onerror = null;
+      _id;
+      constructor(urlIn, _protocols) {
+        super();
+        const urlStr = String(urlIn);
+        this.url = urlStr;
+        this._id = newId();
+        openWs.set(this._id, this);
+        const path = normalizeToRelPath2(urlStr);
+        (async () => {
+          const p = port ?? await portReady;
+          p.postMessage({ type: "ws.open", id: this._id, path });
+        })();
+      }
+      _handle(msg) {
+        if (msg.type === "ws.opened") {
+          this.readyState = 1;
+          const ev = new Event("open");
+          this.onopen?.(ev);
+          this.dispatchEvent(ev);
+        } else if (msg.type === "ws.message") {
+          const bytes = msg.dataB64 ? b64ToBytes(msg.dataB64) : new Uint8Array(0);
+          let data;
+          if (msg.binary) {
+            data = this.binaryType === "arraybuffer" ? bytes.buffer : new Blob([bytes]);
+          } else {
+            data = new TextDecoder().decode(bytes);
+          }
+          const ev = new MessageEvent("message", { data });
+          this.onmessage?.(ev);
+          this.dispatchEvent(ev);
+        } else if (msg.type === "ws.closed") {
+          this.readyState = 3;
+          const ev = new CloseEvent("close", {
+            code: msg.code ?? 1000,
+            reason: msg.reason ?? ""
+          });
+          this.onclose?.(ev);
+          this.dispatchEvent(ev);
+          openWs.delete(this._id);
+        } else if (msg.type === "ws.error") {
+          const ev = new Event("error");
+          this.onerror?.(ev);
+          this.dispatchEvent(ev);
+        }
+      }
+      send(data) {
+        (async () => {
+          const p = port ?? await portReady;
+          let bytes;
+          let binary = false;
+          if (typeof data === "string") {
+            bytes = new TextEncoder().encode(data);
+          } else if (data instanceof Blob) {
+            bytes = new Uint8Array(await data.arrayBuffer());
+            binary = true;
+          } else if (data instanceof ArrayBuffer) {
+            bytes = new Uint8Array(data);
+            binary = true;
+          } else if (ArrayBuffer.isView(data)) {
+            bytes = new Uint8Array(data.buffer, data.byteOffset, data.byteLength);
+            binary = true;
+          } else {
+            bytes = new TextEncoder().encode(String(data));
+          }
+          p.postMessage({
+            type: "ws.send",
+            id: this._id,
+            dataB64: bytesToB64(bytes),
+            binary
+          });
+        })();
+      }
+      close(code, reason) {
+        (async () => {
+          const p = port ?? await portReady;
+          p.postMessage({ type: "ws.close", id: this._id, code, reason });
+        })();
+      }
+      addEventListener(type, listener, options) {
+        super.addEventListener(type, listener, options);
+      }
+    }
+
+    class TunnelXHR extends EventTarget {
+      static UNSENT = 0;
+      static OPENED = 1;
+      static HEADERS_RECEIVED = 2;
+      static LOADING = 3;
+      static DONE = 4;
+      UNSENT = 0;
+      OPENED = 1;
+      HEADERS_RECEIVED = 2;
+      LOADING = 3;
+      DONE = 4;
+      readyState = 0;
+      status = 0;
+      statusText = "";
+      responseText = "";
+      response = null;
+      responseType = "";
+      responseURL = "";
+      withCredentials = false;
+      timeout = 0;
+      upload = new EventTarget;
+      onreadystatechange = null;
+      onload = null;
+      onerror = null;
+      onloadend = null;
+      onabort = null;
+      onprogress = null;
+      ontimeout = null;
+      _method = "GET";
+      _url = "";
+      _reqHeaders = [];
+      _respHeaders = [];
+      _aborted = false;
+      open(method, url) {
+        this._method = method;
+        this._url = url;
+        this.readyState = 1;
+        this.onreadystatechange?.();
+      }
+      setRequestHeader(name, value) {
+        this._reqHeaders.push([name, value]);
+      }
+      getAllResponseHeaders() {
+        return this._respHeaders.map(([k, v]) => `${k}: ${v}`).join(`\r
+`);
+      }
+      getResponseHeader(name) {
+        const lc = name.toLowerCase();
+        const hit = this._respHeaders.find(([k]) => k.toLowerCase() === lc);
+        return hit ? hit[1] : null;
+      }
+      abort() {
+        this._aborted = true;
+        this.readyState = 0;
+      }
+      send(body) {
+        if (isExternalUrl2(this._url)) {
+          const real = new originalXHR;
+          real.open(this._method, this._url);
+          for (const [k, v] of this._reqHeaders)
+            real.setRequestHeader(k, v);
+          real.onload = () => {
+            this.status = real.status;
+            this.responseText = real.responseText;
+            this.response = real.response;
+            this.readyState = 4;
+            this.onreadystatechange?.();
+            this.onload?.();
+            this.onloadend?.();
+            this.dispatchEvent(new Event("load"));
+          };
+          real.onerror = () => {
+            this.onerror?.();
+            this.dispatchEvent(new Event("error"));
+          };
+          real.send(body);
+          return;
+        }
+        const relPath = normalizeToRelPath2(this._url);
+        httpReq(this._method, relPath, body ?? null, this._reqHeaders).then((r) => {
+          if (this._aborted)
+            return;
+          this.status = r.status;
+          this._respHeaders = r.headers ?? [];
+          this.responseText = new TextDecoder().decode(r.bytes);
+          if (this.responseType === "arraybuffer") {
+            this.response = r.bytes.buffer;
+          } else if (this.responseType === "blob") {
+            this.response = new Blob([r.bytes]);
+          } else if (this.responseType === "json") {
+            try {
+              this.response = JSON.parse(this.responseText);
+            } catch {
+              this.response = null;
+            }
+          } else {
+            this.response = this.responseText;
+          }
+          this.readyState = 4;
+          this.onreadystatechange?.();
+          this.onload?.();
+          this.onloadend?.();
+          this.dispatchEvent(new Event("load"));
+        }, () => {
+          if (this._aborted)
+            return;
+          this.onerror?.();
+          this.dispatchEvent(new Event("error"));
+        });
+      }
+    }
+
+    class TunnelEventSource extends EventTarget {
+      static CONNECTING = 0;
+      static OPEN = 1;
+      static CLOSED = 2;
+      readyState = 0;
+      url;
+      withCredentials = false;
+      onopen = null;
+      onmessage = null;
+      onerror = null;
+      constructor(url) {
+        super();
+        this.url = String(url);
+        (async () => {
+          try {
+            const relPath = normalizeToRelPath2(this.url);
+            const r = await httpReq("GET", relPath, null, [
+              ["accept", "text/event-stream"]
+            ]);
+            this.readyState = 1;
+            this.onopen?.(new Event("open"));
+            const text = new TextDecoder().decode(r.bytes);
+            for (const block of text.split(/\n\n/)) {
+              const data = block.split(`
+`).filter((l) => l.startsWith("data:")).map((l) => l.slice(5).trim()).join(`
+`);
+              if (data) {
+                const ev = new MessageEvent("message", { data });
+                this.onmessage?.(ev);
+                this.dispatchEvent(ev);
+              }
+            }
+            this.readyState = 2;
+          } catch {
+            this.onerror?.(new Event("error"));
+          }
+        })();
+      }
+      close() {
+        this.readyState = 2;
+      }
+    }
+    const SELF_HREF = (() => {
+      try {
+        return globalThis.location?.href ?? "";
+      } catch {
+        return "";
+      }
+    })();
+    const SELF_BASE_DIR = computeSelfBaseDir(SELF_HREF);
+    const objectUrls = new Set;
+    function isSelfOriginUrl2(u) {
+      return isSelfOriginUrl(u, SELF_BASE_DIR, SELF_HREF, objectUrls);
+    }
+    function isExternalUrl2(u) {
+      return isExternalUrl(u, SELF_BASE_DIR, SELF_HREF, objectUrls);
+    }
+    function normalizeToRelPath2(u) {
+      return normalizeToRelPath(u, SELF_BASE_DIR);
+    }
+    const URL_ATTRS = new Set([
+      "src",
+      "srcset",
+      "href",
+      "poster",
+      "action",
+      "formaction",
+      "data",
+      "background",
+      "cite",
+      "longdesc",
+      "usemap",
+      "manifest"
+    ]);
+    const URL_STYLE_PROPS = new Set([
+      "background",
+      "backgroundImage",
+      "background-image",
+      "borderImage",
+      "border-image",
+      "borderImageSource",
+      "border-image-source",
+      "listStyle",
+      "list-style",
+      "listStyleImage",
+      "list-style-image",
+      "cursor",
+      "mask",
+      "maskImage",
+      "mask-image",
+      "webkitMask",
+      "-webkit-mask",
+      "webkitMaskImage",
+      "-webkit-mask-image",
+      "content",
+      "src"
+    ]);
+    const __BLOB_CACHE_MAX = 256;
+    const __BLOB_REVOKE_DELAY_MS = 30000;
+    const blobCache = new Map;
+    const blobStats = {
+      created: 0,
+      revoked: 0,
+      hits: 0,
+      misses: 0,
+      inFlightRevokes: 0
+    };
+    function __evictIfOverCap() {
+      while (blobCache.size > __BLOB_CACHE_MAX) {
+        const oldestKey = blobCache.keys().next().value;
+        if (oldestKey === undefined)
+          break;
+        const ent = blobCache.get(oldestKey);
+        blobCache.delete(oldestKey);
+        blobStats.inFlightRevokes++;
+        const t = setTimeout(() => {
+          ent.url.then((u) => {
+            if (typeof u === "string" && u.startsWith("blob:")) {
+              try {
+                URL.revokeObjectURL(u);
+                blobStats.revoked++;
+              } catch {}
+            }
+          }).finally(() => {
+            blobStats.inFlightRevokes--;
+          });
+        }, __BLOB_REVOKE_DELAY_MS);
+        ent.pendingRevoke = t;
+      }
+    }
+    function resolveToBlobUrl(rel) {
+      if (isExternalUrl2(rel))
+        return Promise.resolve(rel);
+      const hashIdx = rel.indexOf("#");
+      const pathPart = hashIdx >= 0 ? rel.slice(0, hashIdx) : rel;
+      const frag = hashIdx >= 0 ? rel.slice(hashIdx) : "";
+      const key = normalizeToRelPath2(pathPart);
+      let ent = blobCache.get(key);
+      if (ent) {
+        if (ent.pendingRevoke != null) {
+          clearTimeout(ent.pendingRevoke);
+          ent.pendingRevoke = undefined;
+          blobStats.inFlightRevokes--;
+        }
+        blobCache.delete(key);
+        blobCache.set(key, ent);
+        blobStats.hits++;
+      } else {
+        blobStats.misses++;
+        const url = httpReq("GET", key, null).then((r) => {
+          const ctHeader = r.headers.find(([k]) => k.toLowerCase() === "content-type");
+          const ct = ctHeader?.[1] ?? "application/octet-stream";
+          const blob = new Blob([r.bytes], { type: ct });
+          blobStats.created++;
+          return URL.createObjectURL(blob);
+        });
+        ent = { url };
+        blobCache.set(key, ent);
+        __evictIfOverCap();
+      }
+      return frag ? ent.url.then((b) => b + frag) : ent.url;
+    }
+    const HATCH_PIXEL_PREFIX = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+    const HATCH_FRAG = "#hatch=";
+    function isHatchPlaceholder(url) {
+      return url.indexOf(HATCH_PIXEL_PREFIX + HATCH_FRAG) === 0;
+    }
+    function unwrapHatchPlaceholder(url) {
+      if (!isHatchPlaceholder(url))
+        return null;
+      return decodeURIComponent(url.slice((HATCH_PIXEL_PREFIX + HATCH_FRAG).length));
+    }
+    async function rewriteCssTextAsync(text) {
+      const re = /url\(\s*(['"]?)([^'")]+)\1\s*\)/g;
+      const tasks = [];
+      let m;
+      while ((m = re.exec(text)) !== null) {
+        tasks.push({ match: m[0], index: m.index, url: m[2].trim() });
+      }
+      if (tasks.length === 0)
+        return text;
+      const resolved = await Promise.all(tasks.map(async (t) => {
+        if (t.url.startsWith("blob:"))
+          return t.url;
+        const unwrapped = unwrapHatchPlaceholder(t.url);
+        if (unwrapped != null) {
+          try {
+            return await resolveToBlobUrl(unwrapped);
+          } catch {
+            return t.url;
+          }
+        }
+        if (isExternalUrl2(t.url))
+          return t.url;
+        try {
+          return await resolveToBlobUrl(t.url);
+        } catch {
+          return t.url;
+        }
+      }));
+      let out = "";
+      let last = 0;
+      tasks.forEach((t, i) => {
+        out += text.slice(last, t.index);
+        out += `url("${resolved[i]}")`;
+        last = t.index + t.match.length;
+      });
+      out += text.slice(last);
+      return out;
+    }
+    function rewriteCssText(text) {
+      return rewriteCssTextAsync(text);
+    }
+    const mediaSourceLoads = new WeakMap;
+    window.addEventListener("error", (event) => {
+      const source = event.target;
+      if (!event.isTrusted || !(source instanceof HTMLSourceElement) || !(source.parentElement instanceof HTMLMediaElement) || source.hasAttribute("src"))
+        return;
+      const state = mediaSourceLoads.get(source);
+      if (state === "pending" || state === undefined && source.hasAttribute("data-hatch-src")) {
+        event.stopImmediatePropagation();
+      }
+    }, true);
+    function isElement(el) {
+      if (el instanceof Element)
+        return true;
+      const ownerWindow = el?.ownerDocument?.defaultView;
+      return ownerWindow != null && el instanceof ownerWindow.Element;
+    }
+    function setAttr(el, name, value, ...rest) {
+      if (!isElement(el)) {
+        return el.setAttribute(name, value, ...rest);
+      }
+      name = String(name);
+      if (value == null) {
+        if (name.toLowerCase() === "src" && el instanceof HTMLSourceElement) {
+          mediaSourceLoads.set(el, "settled");
+        }
+        try {
+          el.removeAttribute(name);
+        } catch {}
+        return;
+      }
+      const v = String(value);
+      const lcName = name.toLowerCase();
+      const tag = el.tagName?.toUpperCase();
+      if ((tag === "A" || tag === "BASE" || tag === "AREA") && lcName === "href") {
+        el.setAttribute(name, v);
+        return;
+      }
+      if (!URL_ATTRS.has(lcName) && lcName !== "style" && lcName !== "srcset") {
+        el.setAttribute(name, v);
+        return;
+      }
+      if (lcName === "srcset") {
+        const parts = v.split(",").map((s) => s.trim()).filter(Boolean);
+        Promise.all(parts.map(async (p) => {
+          const segs = p.split(/\s+/);
+          const url = segs[0];
+          const rest = segs.slice(1).join(" ");
+          if (isExternalUrl2(url))
+            return p;
+          const resolved = await resolveToBlobUrl(url);
+          return rest ? `${resolved} ${rest}` : resolved;
+        })).then((rebuilt) => {
+          try {
+            el.setAttribute("srcset", rebuilt.join(", "));
+          } catch {}
+        });
+        return;
+      }
+      if (URL_ATTRS.has(lcName)) {
+        const isMediaSource = tag === "SOURCE" && lcName === "src";
+        if (isExternalUrl2(v)) {
+          if (isMediaSource)
+            mediaSourceLoads.set(el, "settled");
+          el.setAttribute(name, v);
+          return;
+        }
+        if (isMediaSource)
+          mediaSourceLoads.set(el, "pending");
+        if (tag === "IMG" || tag === "VIDEO" && lcName === "poster") {
+          el.setAttribute(name, TRANSPARENT_PIXEL);
+        }
+        resolveToBlobUrl(v).then((blobUrl) => {
+          if (isMediaSource)
+            mediaSourceLoads.set(el, "settled");
+          try {
+            el.setAttribute(name, blobUrl);
+            if (isMediaSource) {
+              const media = el.parentElement;
+              if (media instanceof HTMLMediaElement && media.networkState === HTMLMediaElement.NETWORK_NO_SOURCE) {
+                const nextSibling = el.nextSibling;
+                el.remove();
+                media.insertBefore(el, nextSibling);
+              }
+            }
+          } catch {}
+        }, () => {
+          if (isMediaSource) {
+            mediaSourceLoads.set(el, "settled");
+            el.dispatchEvent(new Event("error"));
+          }
+        });
+        return;
+      }
+      if (lcName === "style") {
+        setStyleAttr(el, v);
+        return;
+      }
+      el.setAttribute(name, v);
+    }
+    function setAttrNS(el, ns, name, value, ...rest) {
+      if (!isElement(el)) {
+        return el.setAttributeNS(ns, name, value, ...rest);
+      }
+      name = String(name);
+      if (value == null) {
+        try {
+          el.removeAttributeNS(ns ?? null, name);
+        } catch {}
+        return;
+      }
+      const v = String(value);
+      const lcName = name.split(":").pop().toLowerCase();
+      if (lcName === "href" && URL_ATTRS.has("href")) {
+        if (isExternalUrl2(v)) {
+          el.setAttributeNS(ns ?? null, name, v);
+          return;
+        }
+        resolveToBlobUrl(v).then((blobUrl) => {
+          try {
+            el.setAttributeNS(ns ?? null, name, blobUrl);
+          } catch {}
+        }, () => {});
+        return;
+      }
+      try {
+        el.setAttributeNS(ns ?? null, name, v);
+      } catch {}
+    }
+    function setUrlProp(el, name, value) {
+      if (isElement(el)) {
+        setAttr(el, name.toLowerCase(), value);
+      } else {
+        el[name] = value;
+      }
+      return value;
+    }
+    const TRANSPARENT_PIXEL = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+    const HTML_TAG_ATTRS = {
+      img: ["src", "srcset", "poster"],
+      image: ["href"],
+      video: ["src", "poster"],
+      audio: ["src"],
+      source: ["src", "srcset"],
+      script: ["src"],
+      link: ["href"],
+      iframe: ["src"],
+      embed: ["src"],
+      object: ["data"],
+      track: ["src"],
+      input: ["src"],
+      form: ["action"],
+      button: ["formaction"],
+      use: ["href"]
+    };
+    function rewriteHtmlString(html) {
+      return html.replace(/<([a-zA-Z][a-zA-Z0-9-]*)\b([^>]*)>/g, (m, tag, attrs) => {
+        const lc = String(tag).toLowerCase();
+        const candidates = HTML_TAG_ATTRS[lc];
+        if (!candidates)
+          return m;
+        let out = attrs;
+        for (const a of candidates) {
+          const re = new RegExp(`\\b${a}\\s*=\\s*("([^"]*)"|'([^']*)'|([^\\s>]+))`, "i");
+          const matched = out.match(re);
+          if (!matched)
+            continue;
+          const value = matched[2] ?? matched[3] ?? matched[4] ?? "";
+          if (isExternalUrl2(value))
+            continue;
+          out = out.replace(re, `data-hatch-${a}="${value.replace(/"/g, "&quot;")}"`);
+        }
+        const styleRe = /\bstyle\s*=\s*("([^"]*)"|'([^']*)')/i;
+        const sm = out.match(styleRe);
+        if (sm) {
+          const value = sm[2] ?? sm[3] ?? "";
+          if (value.includes("url(")) {
+            out = out.replace(styleRe, `data-hatch-style="${value.replace(/"/g, "&quot;")}"`);
+          }
+        }
+        return `<${tag}${out}>`;
+      });
+    }
+    const HTML_URL_ATTRS_BY_TAG = {
+      IMG: ["src", "srcset", "poster"],
+      IMAGE: ["href"],
+      VIDEO: ["src", "poster"],
+      AUDIO: ["src"],
+      SOURCE: ["src", "srcset"],
+      SCRIPT: ["src"],
+      LINK: ["href"],
+      IFRAME: ["src"],
+      EMBED: ["src"],
+      OBJECT: ["data"],
+      TRACK: ["src"],
+      INPUT: ["src"],
+      FORM: ["action"],
+      BUTTON: ["formaction"],
+      USE: ["href", "xlink:href"]
+    };
+    function rewriteSubtreeForTunnel(root) {
+      if (!root)
+        return;
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT);
+      let n = walker.currentNode;
+      if (root.nodeType === 1)
+        processOne(root);
+      while (n = walker.nextNode()) {
+        processOne(n);
+      }
+    }
+    function processOne(el) {
+      const tag = (el.tagName ?? "").toUpperCase();
+      const attrs = HTML_URL_ATTRS_BY_TAG[tag];
+      if (attrs) {
+        for (const a of attrs) {
+          const v = el.getAttribute(a);
+          if (v == null)
+            continue;
+          if (isExternalUrl2(v))
+            continue;
+          el.setAttribute("data-hatch-" + a, v);
+          el.removeAttribute(a);
+        }
+      }
+      const style = el.getAttribute("style");
+      if (style && style.includes("url(")) {
+        el.setAttribute("data-hatch-style", style);
+        el.removeAttribute("style");
+      }
+    }
+    function parseAndCleanHtml(html) {
+      const tpl = document.createElement("template");
+      tpl.innerHTML = html;
+      rewriteSubtreeForTunnel(tpl.content);
+      return tpl.content;
+    }
+    function setInnerHTML(el, html, which = "innerHTML") {
+      const s = html == null ? "" : String(html);
+      if (which === "innerHTML" && typeof el.tagName === "string" && el.tagName.toUpperCase() === "TEMPLATE") {
+        try {
+          el.innerHTML = s;
+        } catch {}
+        return;
+      }
+      if (which === "outerHTML") {
+        const frag = parseAndCleanHtml(s);
+        const wrap = document.createElement("div");
+        wrap.appendChild(frag);
+        try {
+          el.outerHTML = wrap.innerHTML;
+        } catch {}
+        queueMicrotask(() => processDataHatchAttrs(document.body));
+        return;
+      }
+      const frag = parseAndCleanHtml(s);
+      try {
+        while (el.firstChild)
+          el.removeChild(el.firstChild);
+        el.appendChild(frag);
+      } catch {}
+      queueMicrotask(() => processDataHatchAttrs(el));
+    }
+    function insertAdjacentHTMLT(el, position, html) {
+      const s = html == null ? "" : String(html);
+      const frag = parseAndCleanHtml(s);
+      const wrap = document.createElement("template");
+      wrap.content.appendChild(frag);
+      try {
+        el.insertAdjacentHTML(position, wrap.innerHTML);
+      } catch {}
+      queueMicrotask(() => processDataHatchAttrs(document.body));
+    }
+    function processDataHatchAttrs(root) {
+      const SELECTORS = "[data-hatch-src], [data-hatch-href], [data-hatch-srcset], [data-hatch-poster], [data-hatch-action], [data-hatch-data], [data-hatch-style]";
+      root.querySelectorAll(SELECTORS).forEach((el) => {
+        const attrs = el.getAttributeNames();
+        for (const a of attrs) {
+          if (!a.startsWith("data-hatch-"))
+            continue;
+          const real = a.slice("data-hatch-".length);
+          const value = el.getAttribute(a) ?? "";
+          el.removeAttribute(a);
+          if (real === "style")
+            setStyleAttr(el, value);
+          else
+            setAttr(el, real, value);
+        }
+      });
+    }
+    const styleProxyCache = new WeakMap;
+    function getStyle(el) {
+      if (el == null)
+        return el;
+      let real;
+      try {
+        real = el.style;
+      } catch {
+        return;
+      }
+      if (real == null || typeof real !== "object" && typeof real !== "function") {
+        return real;
+      }
+      let proxy = styleProxyCache.get(real);
+      if (proxy)
+        return proxy;
+      proxy = new Proxy(real, {
+        get(target, prop, _receiver) {
+          const v = Reflect.get(target, prop, target);
+          if (typeof v === "function")
+            return v.bind(target);
+          return v;
+        },
+        set(target, prop, value) {
+          if (typeof prop === "string") {
+            setStyle(el, prop, value);
+            return true;
+          }
+          return Reflect.set(target, prop, value, target);
+        }
+      });
+      styleProxyCache.set(real, proxy);
+      return proxy;
+    }
+    function setStyle(el, propName, value) {
+      const v = value == null ? "" : String(value);
+      if (propName.startsWith("--")) {
+        rewriteCssText(v).then((rewritten) => {
+          try {
+            el.style.setProperty(propName, rewritten);
+          } catch {}
+        });
+        return;
+      }
+      if (URL_STYLE_PROPS.has(propName) && v.includes("url(")) {
+        rewriteCssText(v).then((rewritten) => {
+          try {
+            el.style[propName] = rewritten;
+          } catch {}
+        });
+        return;
+      }
+      try {
+        el.style[propName] = v;
+      } catch {}
+    }
+    function setStyleAttr(el, attrValue) {
+      if (!attrValue.includes("url(")) {
+        el.setAttribute("style", attrValue);
+        return;
+      }
+      rewriteCssText(attrValue).then((rewritten) => {
+        try {
+          el.setAttribute("style", rewritten);
+        } catch {}
+      });
+    }
+    function setStyleText(styleEl, text) {
+      if (!(styleEl instanceof HTMLStyleElement)) {
+        try {
+          styleEl.textContent = text;
+        } catch {}
+        return;
+      }
+      if (!text.includes("url(")) {
+        styleEl.textContent = text;
+        return;
+      }
+      rewriteCssText(text).then((rewritten) => {
+        try {
+          styleEl.textContent = rewritten;
+        } catch {}
+      });
+    }
+    function tunnelImage(_w, _h) {
+      const img = new originalImage;
+      const desc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, "src");
+      if (desc?.set) {
+        const origSet = desc.set;
+        const origGet = desc.get;
+        Object.defineProperty(img, "src", {
+          configurable: true,
+          get() {
+            return origGet.call(img);
+          },
+          set(v) {
+            if (v == null)
+              return origSet.call(img, "");
+            const s = String(v);
+            if (isExternalUrl2(s))
+              return origSet.call(img, s);
+            resolveToBlobUrl(s).then((b) => origSet.call(img, b), () => origSet.call(img, s));
+          }
+        });
+      }
+      return img;
+    }
+    function tunnelSendBeacon(url, data) {
+      tunnelFetch(url, { method: "POST", body: data, keepalive: true }).catch(() => {});
+      return true;
+    }
+    function tunnelWorker(_url) {
+      throw new Error("[__tunnel] new Worker() is not supported in Muse web artifacts.");
+    }
+    function tunnelImport(spec) {
+      throw new Error("[__tunnel] dynamic import() of '" + String(spec) + "' is not supported in Muse web artifacts.");
+    }
+    function installCssObserver() {
+      try {
+        const proto = window.CSSStyleSheet?.prototype;
+        if (proto) {
+          const origInsertRule = proto.insertRule;
+          proto.insertRule = function(rule, index) {
+            if (typeof rule === "string" && rule.includes("url(")) {
+              const idx = origInsertRule.call(this, rule, index);
+              rewriteCssText(rule).then((rewritten) => {
+                if (rewritten !== rule) {
+                  try {
+                    this.deleteRule(idx);
+                    origInsertRule.call(this, rewritten, idx);
+                  } catch {}
+                }
+              });
+              return idx;
+            }
+            return origInsertRule.call(this, rule, index);
+          };
+          const origReplace = proto.replace;
+          if (origReplace) {
+            proto.replace = function(text) {
+              if (typeof text === "string" && text.includes("url(")) {
+                return rewriteCssText(text).then((rewritten) => origReplace.call(this, rewritten));
+              }
+              return origReplace.call(this, text);
+            };
+          }
+          const origReplaceSync = proto.replaceSync;
+          if (origReplaceSync) {
+            proto.replaceSync = function(text) {
+              if (typeof text === "string" && text.includes("url(")) {
+                const ret = origReplaceSync.call(this, text);
+                rewriteCssText(text).then((rewritten) => {
+                  try {
+                    origReplaceSync.call(this, rewritten);
+                  } catch {}
+                });
+                return ret;
+              }
+              return origReplaceSync.call(this, text);
+            };
+          }
+        }
+      } catch (e) {}
+      function sweepSheet(sheet) {
+        try {
+          const rules = sheet.cssRules;
+          for (let i = 0;i < rules.length; i++) {
+            const rule = rules[i];
+            const txt = rule.cssText;
+            if (txt && (txt.includes(HATCH_FRAG) || txt.includes("url(") && !/url\(\s*["']?(blob:|https?:|data:image\/gif;base64,R0)/.test(txt))) {
+              rewriteCssText(txt).then((rewritten) => {
+                if (rewritten !== txt) {
+                  try {
+                    sheet.deleteRule(i);
+                    sheet.insertRule(rewritten, i);
+                  } catch {}
+                }
+              });
+            }
+          }
+        } catch {}
+      }
+      function sweepAll() {
+        for (const sheet of Array.from(document.styleSheets)) {
+          sweepSheet(sheet);
+        }
+      }
+      const mo = new MutationObserver((mutations) => {
+        for (const m of mutations) {
+          for (const node of Array.from(m.addedNodes)) {
+            if (node instanceof HTMLStyleElement) {
+              const txt = node.textContent ?? "";
+              if (txt.includes("url(")) {
+                rewriteCssText(txt).then((rewritten) => {
+                  if (rewritten !== txt) {
+                    try {
+                      node.textContent = rewritten;
+                    } catch {}
+                  }
+                });
+              }
+            } else if (node instanceof HTMLLinkElement && node.rel === "stylesheet") {
+              node.addEventListener("load", () => sweepSheet(node.sheet), { once: true });
+            }
+          }
+        }
+      });
+      mo.observe(document, { subtree: true, childList: true });
+      Promise.resolve().then(sweepAll);
+      setTimeout(sweepAll, 0);
+      setTimeout(sweepAll, 50);
+      setTimeout(sweepAll, 250);
+    }
+    function rewriteAuthoredHtml() {
+      const SELECTORS = "[data-hatch-src], [data-hatch-href], [data-hatch-srcset]";
+      document.querySelectorAll(SELECTORS).forEach((el) => {
+        const src = el.getAttribute("data-hatch-src");
+        const href = el.getAttribute("data-hatch-href");
+        const srcset = el.getAttribute("data-hatch-srcset");
+        if (src)
+          setAttr(el, "src", src);
+        if (href)
+          setAttr(el, "href", href);
+        if (srcset)
+          setAttr(el, "srcset", srcset);
+      });
+    }
+    let historyUrlWarned = false;
+    function warnHistoryUrlDropped(method, url) {
+      if (url === undefined || url === null)
+        return;
+      if (historyUrlWarned)
+        return;
+      historyUrlWarned = true;
+      try {
+        console.warn("[__tunnel] history." + method + "() was called with a URL; the URL was ignored. A Muse web artifact " + "renders in an opaque origin with no navigable URL of its own, so " + "the browser rejects any URL change. State kept in the URL will not " + "persist or survive a reload — keep it in component state, or in " + "the artifact's database through a server action.");
+      } catch {}
+    }
+    const originalFetch = globalThis.fetch?.bind(globalThis) ?? (() => {
+      throw new Error("no native fetch");
+    });
+    const originalXHR = globalThis.XMLHttpRequest;
+    const originalImage = globalThis.Image;
+    const tunnel = {
+      fetch: tunnelFetch,
+      XHR: TunnelXHR,
+      WebSocket: TunnelWebSocket,
+      EventSource: TunnelEventSource,
+      Image: tunnelImage,
+      Worker: tunnelWorker,
+      import: tunnelImport,
+      sendBeacon: tunnelSendBeacon,
+      setAttr,
+      setAttrNS,
+      setUrlProp,
+      setStyle,
+      getStyle,
+      setStyleAttr,
+      setStyleText,
+      setInnerHTML,
+      insertAdjacentHTML: insertAdjacentHTMLT,
+      rewriteCssText,
+      resolveToBlobUrl,
+      processDataHatchAttrs,
+      rewriteHtmlString,
+      _resolveUrlString: (v) => v,
+      _resolveCssValue: (v) => v,
+      _resolveCssText: (v) => v,
+      _resolveStyleProp: (v) => v,
+      _importMeta: {
+        get url() {
+          return importMetaUrl(SELF_HREF, SELF_BASE_DIR);
+        }
+      },
+      _state: {
+        get port() {
+          return port;
+        },
+        get inFlight() {
+          return pending.size;
+        },
+        get blobCacheSize() {
+          return blobCache.size;
+        },
+        get blobStats() {
+          return { ...blobStats };
+        }
+      }
+    };
+    globalThis.__tunnel = tunnel;
+    window.__tunnel = tunnel;
+    try {
+      globalThis.fetch = tunnelFetch;
+      window.fetch = tunnelFetch;
+      globalThis.XMLHttpRequest = TunnelXHR;
+      window.XMLHttpRequest = TunnelXHR;
+      globalThis.WebSocket = TunnelWebSocket;
+      window.WebSocket = TunnelWebSocket;
+      globalThis.EventSource = TunnelEventSource;
+      window.EventSource = TunnelEventSource;
+      const nav = globalThis.navigator;
+      if (nav && typeof nav.sendBeacon === "function") {
+        nav.sendBeacon = (url, data) => tunnelSendBeacon(url, data);
+      }
+      const NativeURL = globalThis.URL;
+      const TunnelURL = function(url, base) {
+        return resolveTunnelUrl(url, base, SELF_HREF, NativeURL);
+      };
+      TunnelURL.prototype = NativeURL.prototype;
+      for (const k of Object.getOwnPropertyNames(NativeURL)) {
+        if (k === "prototype" || k === "length" || k === "name")
+          continue;
+        try {
+          TunnelURL[k] = NativeURL[k];
+        } catch {}
+      }
+      globalThis.URL = TunnelURL;
+      window.URL = TunnelURL;
+    } catch {}
+    try {
+      const hist = globalThis.history;
+      if (hist && typeof hist.pushState === "function" && typeof hist.replaceState === "function") {
+        const nativePushState = hist.pushState.bind(hist);
+        const nativeReplaceState = hist.replaceState.bind(hist);
+        hist.pushState = function(state, title, url) {
+          warnHistoryUrlDropped("pushState", url);
+          return nativePushState(state, title ?? "");
+        };
+        hist.replaceState = function(state, title, url) {
+          warnHistoryUrlDropped("replaceState", url);
+          return nativeReplaceState(state, title ?? "");
+        };
+      }
+    } catch {}
+    try {
+      const nativeCreateObjectURL = URL.createObjectURL.bind(URL);
+      const nativeRevokeObjectURL = URL.revokeObjectURL.bind(URL);
+      URL.createObjectURL = function(obj) {
+        const created = nativeCreateObjectURL(obj);
+        try {
+          objectUrls.add(created);
+        } catch {}
+        return created;
+      };
+      URL.revokeObjectURL = function(objectUrl) {
+        try {
+          objectUrls.delete(objectUrl);
+        } catch {}
+        nativeRevokeObjectURL(objectUrl);
+      };
+    } catch {}
+    const announceEpoch = Math.random().toString(36).slice(2) + "-" + Date.now().toString(36);
+    let announceTimer = null;
+    function announce() {
+      try {
+        window.parent.postMessage({ type: "bundle:ready", epoch: announceEpoch }, "*");
+      } catch {}
+    }
+    function startAnnouncing() {
+      announce();
+      announceTimer = setInterval(() => {
+        if (port != null) {
+          if (announceTimer != null)
+            clearInterval(announceTimer);
+          announceTimer = null;
+          return;
+        }
+        announce();
+      }, 120);
+    }
+    function onParentMessage(ev) {
+      const data = ev.data;
+      if (!data || typeof data !== "object")
+        return;
+      if (data.type === "bundle:init-port" && ev.ports && ev.ports[0]) {
+        if (port != null)
+          return;
+        if (announceTimer != null) {
+          clearInterval(announceTimer);
+          announceTimer = null;
+        }
+        port = ev.ports[0];
+        port.onmessage = (pe) => {
+          const msg = pe.data;
+          if (!msg || typeof msg !== "object")
+            return;
+          if (msg.type === "http.res") {
+            const ent = pending.get(msg.id);
+            if (ent) {
+              pending.delete(msg.id);
+              ent.resolve(msg);
+            }
+          } else if (msg.type === "ws.opened" || msg.type === "ws.message" || msg.type === "ws.closed" || msg.type === "ws.error") {
+            openWs.get(msg.id)?._handle(msg);
+          }
+        };
+        port.start?.();
+        portReadyResolve?.(port);
+        installCssObserver();
+        rewriteAuthoredHtml();
+        try {
+          window.parent.postMessage({ type: "bundle:port-attached" }, "*");
+        } catch {}
+      }
+    }
+    window.addEventListener("message", onParentMessage);
+    installDownloadLinks(tunnelFetch, isExternalUrl2, __BLOB_REVOKE_DELAY_MS);
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      startAnnouncing();
+    } else {
+      document.addEventListener("DOMContentLoaded", startAnnouncing);
+    }
+  })();
+})();
+
+;
+var LONG_FORM = [{
+  id: "yUpFIIHDEs0",
+  title: "Studio Podcast Edit",
+  kind: "Podcast",
+  desc: "Multi-cam talking-head podcast, cut for pace and clarity.",
+  feature: true
+}, {
+  id: "zgKGg6JvaB4",
+  title: "Cinematic Interview Edit",
+  kind: "Interview",
+  desc: "Warm, filmic interview grade with story-first pacing."
+}, {
+  id: "Q0zprz8WIqM",
+  title: "Health Explainer — Dr. Ross",
+  kind: "Explainer",
+  desc: "Talking-head explainer with bold graphic overlays and captions."
+}, {
+  id: "GtWdF42IdUM",
+  title: "Faceless Typography Film",
+  kind: "Typography",
+  desc: "Pure kinetic type — a faceless edit carried by words in motion."
+}, {
+  id: "F6877Y4eDaU",
+  title: "Kinetic Typography Edit",
+  kind: "Typography",
+  desc: "High-energy type animation synced to voiceover, frame by frame."
+}, {
+  id: "7tq2mZQbEu4",
+  title: "Finance Promo — VWAP Wave System",
+  kind: "Promo",
+  desc: "Product promo edit for a trading educator's flagship system."
+}, {
+  id: "q17GOnp2NRo",
+  title: "Creator Talking-Head Edit",
+  kind: "Talking Head",
+  desc: "Creator-style edit with cutout graphics and punchy on-screen text."
+}];
+var SHORTS = [{
+  id: "NNJbSuM3nfc",
+  title: "Real Estate Promo Reel",
+  sub: "Raw footage → final delivery"
+}, {
+  id: "TFFTAnUQaZw",
+  title: "Talking-Head Transformation",
+  sub: "Before / after edit breakdown"
+}, {
+  id: "K7l70Jy3j2E",
+  title: "Podcast Reel — Raw vs My Edit",
+  sub: "Same clip, two worlds"
+}, {
+  id: "_MEWjsABOdE",
+  title: "Hook-First Reel Edit",
+  sub: "\u201CYou can't start with Hey Guys\u201D"
+}, {
+  id: "8z_WXPYS0pc",
+  title: "Talking-Head Reel",
+  sub: "Received → delivered"
+}, {
+  id: "6xVcfLWL7Rw",
+  title: "Barbershop Cinematic Reel",
+  sub: "Slow-motion craft edit"
+}, {
+  id: "USkH4v51MSo",
+  title: "Barbershop Reel — Raw to Edited",
+  sub: "Colour & cut transformation"
+}, {
+  id: "FyGKS2zpMB8",
+  title: "2D Animation Explainer",
+  sub: "Animated short-form explainer"
+}];
+var playSVG = '<span class="play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span>';
+var workGrid = document.getElementById("workGrid");
+__tunnel.setInnerHTML(workGrid, LONG_FORM.map(function (v) {
+  return '<article class="card rv' + (v.feature ? " feature" : "") + '">' + '<div class="thumb" data-video="' + v.id + '" data-title="' + v.title.replace(/"/g, "&quot;") + '" data-mode="wide" role="button" tabindex="0" aria-label="Play video: ' + v.title + '">' + '<img src="assets/thumbs/long-' + v.id + '.jpg" alt="Thumbnail — ' + v.title + '" width="1280" height="720" />' + '<span class="kind">' + v.kind + '</span>' + playSVG + '</div>' + '<div class="card-body"><h3>' + v.title + '</h3><p>' + v.desc + '</p></div></article>';
+}).join(""), "innerHTML");
+var shortsGrid = document.getElementById("shortsGrid");
+__tunnel.setInnerHTML(shortsGrid, SHORTS.map(function (v) {
+  return '<article class="scard rv" data-video="' + v.id + '" data-title="' + v.title.replace(/"/g, "&quot;") + '" data-mode="portrait" role="button" tabindex="0" aria-label="Play short: ' + v.title + '">' + '<img src="assets/thumbs/short-' + v.id + '.jpg" alt="Thumbnail — ' + v.title + '" width="1280" height="720" />' + '<span class="shade"></span>' + '<span class="splay" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span>' + '<span class="smeta"><b>' + v.title + '</b><span>' + v.sub + '</span></span></article>';
+}).join(""), "innerHTML");
+var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+function startPlayer(holder, withSound) {
+  if (holder.classList.contains("playing")) return;
+  var id = holder.getAttribute("data-video");
+  var mode = holder.getAttribute("data-mode");
+  var src = "https://www.youtube-nocookie.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0&modestbranding=1&controls=1&mute=" + (withSound ? "0" : "1");
+  if (mode === "portrait") src += "&loop=1&playlist=" + id;
+  var f = document.createElement("iframe");
+  __tunnel.setUrlProp(f, "src", src);
+  f.title = holder.getAttribute("data-title") || "Video player";
+  __tunnel.setAttr(f, "allow", "accelerometer; autoplay; encrypted-media; picture-in-picture");
+  __tunnel.setAttr(f, "allowfullscreen", "");
+  __tunnel.setAttr(f, "referrerpolicy", "strict-origin-when-cross-origin");
+  holder.appendChild(f);
+  holder.classList.add("playing");
+}
+function stopPlayer(holder) {
+  var f = holder.querySelector("iframe");
+  if (f) holder.removeChild(f);
+  holder.classList.remove("playing");
+}
+var playerIO = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (en.isIntersecting) {
+      if (!prefersReduced) startPlayer(en.target, false);
+    } else stopPlayer(en.target);
+  });
+}, {
+  rootMargin: "160px 0px",
+  threshold: 0.15
+});
+document.querySelectorAll("[data-video]").forEach(function (el) {
+  playerIO.observe(el);
+});
+document.addEventListener("click", function (e) {
+  var holder = e.target.closest("[data-video]");
+  if (holder && !holder.classList.contains("playing")) startPlayer(holder, true);
+});
+document.addEventListener("keydown", function (e) {
+  if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches("[data-video]") && !e.target.classList.contains("playing")) {
+    e.preventDefault();
+    startPlayer(e.target, true);
+  }
+});
+var header = document.getElementById("siteHeader"),
+  progress = document.getElementById("progress"),
+  burger = document.getElementById("burger"),
+  mobileMenu = document.getElementById("mobileMenu");
+function onScroll() {
+  var y = window.scrollY || 0;
+  header.classList.toggle("scrolled", y > 24);
+  var h = document.documentElement.scrollHeight - window.innerHeight;
+  __tunnel.setStyle(progress, "width", (h > 0 ? y / h * 100 : 0) + "%");
+}
+window.addEventListener("scroll", onScroll, {
+  passive: true
+});
+onScroll();
+burger.addEventListener("click", function () {
+  var open = mobileMenu.classList.toggle("open");
+  __tunnel.setAttr(burger, "aria-expanded", open ? "true" : "false");
+});
+mobileMenu.addEventListener("click", function (e) {
+  if (e.target.tagName === "A") {
+    mobileMenu.classList.remove("open");
+    __tunnel.setAttr(burger, "aria-expanded", "false");
+  }
+});
+var track = document.getElementById("marqueeTrack");
+track.innerHTML += track.innerHTML;
+function runCounter(el) {
+  var target = parseInt(el.getAttribute("data-target"), 10) || 0;
+  var start = null,
+    dur = 1400;
+  function step(ts) {
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+var counterIO = new IntersectionObserver(function (entries) {
+  entries.forEach(function (en) {
+    if (en.isIntersecting) {
+      runCounter(en.target);
+      counterIO.unobserve(en.target);
+    }
+  });
+}, {
+  threshold: .35
+});
+document.querySelectorAll(".count").forEach(function (el) {
+  counterIO.observe(el);
+});
+var loader = document.getElementById("loader"),
+  loadBar = document.getElementById("loadBar"),
+  loadPct = document.getElementById("loadPct"),
+  lp = 0;
+var loadTimer = setInterval(function () {
+  lp = Math.min(lp + Math.random() * 22, 92);
+  __tunnel.setStyle(loadBar, "width", lp + "%");
+  loadPct.textContent = Math.floor(lp);
+}, 110);
+function finishLoad() {
+  clearInterval(loadTimer);
+  __tunnel.setStyle(loadBar, "width", "100%");
+  loadPct.textContent = "100";
+  setTimeout(function () {
+    loader.classList.add("done");
+    heroIntro();
+  }, 220);
+}
+if (document.readyState === "complete") finishLoad();else window.addEventListener("load", finishLoad);
+setTimeout(function () {
+  if (!loader.classList.contains("done")) finishLoad();
+}, 3500);
+var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var hasGsap = typeof gsap !== "undefined";
+var heroPlayed = false;
+function heroIntro() {
+  if (heroPlayed) return;
+  heroPlayed = true;
+  if (!hasGsap || reduced) return;
+  var tl = gsap.timeline({
+    defaults: {
+      ease: "power3.out"
+    }
+  });
+  tl.from(".hero h1 .row > span", {
+    yPercent: 110,
+    duration: .9,
+    stagger: .12
+  }).from(".hero .avail", {
+    y: 16,
+    opacity: 0,
+    duration: .5
+  }, "-=.55").from(".hero .who, .hero .lede, .hero .hero-ctas, .hero .hero-tools", {
+    y: 26,
+    opacity: 0,
+    duration: .65,
+    stagger: .09
+  }, "-=.4").from(".hero-photo", {
+    scale: .9,
+    opacity: 0,
+    duration: .9,
+    ease: "power2.out"
+  }, "-=.7").from(".hero .chip", {
+    scale: .6,
+    opacity: 0,
+    duration: .5,
+    stagger: .14,
+    ease: "back.out(2.2)"
+  }, "-=.45").from(".hero .stats", {
+    y: 34,
+    opacity: 0,
+    duration: .7
+  }, "-=.3");
+}
+if (hasGsap && !reduced) {
+  gsap.registerPlugin(ScrollTrigger);
+  document.querySelectorAll("section:not(.hero) .rv, footer .rv").forEach(function (el) {
+    gsap.from(el, {
+      y: 44,
+      opacity: 0,
+      duration: .85,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 88%",
+        once: true
+      }
+    });
+  });
+  gsap.to("#photoRing", {
+    y: -16,
+    ease: "none",
+    scrollTrigger: {
+      trigger: ".hero",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1
+    }
+  });
+}
+var finePointer = window.matchMedia("(pointer: fine)").matches;
+if (finePointer && !reduced) {
+  document.body.classList.add("has-cursor");
+  var glow = document.getElementById("cursorGlow"),
+    gx = 0,
+    gy = 0,
+    tx = 0,
+    ty = 0;
+  document.addEventListener("mousemove", function (e) {
+    tx = e.clientX;
+    ty = e.clientY;
+  });
+  (function glowLoop() {
+    gx += (tx - gx) * .08;
+    gy += (ty - gy) * .08;
+    __tunnel.setStyle(glow, "transform", "translate(" + gx + "px," + gy + "px)");
+    requestAnimationFrame(glowLoop);
+  })();
+  document.querySelectorAll(".magnetic").forEach(function (btn) {
+    btn.addEventListener("mousemove", function (e) {
+      var r = btn.getBoundingClientRect();
+      var x = (e.clientX - r.left - r.width / 2) * .22;
+      var y = (e.clientY - r.top - r.height / 2) * .28;
+      __tunnel.setStyle(btn, "transform", "translate(" + x + "px," + y + "px)");
+    });
+    btn.addEventListener("mouseleave", function () {
+      __tunnel.setStyle(btn, "transform", "");
+    });
+  });
+  document.querySelectorAll(".card, .scard").forEach(function (card) {
+    card.addEventListener("mousemove", function (e) {
+      var r = card.getBoundingClientRect();
+      var rx = ((e.clientY - r.top) / r.height - .5) * -5;
+      var ry = ((e.clientX - r.left) / r.width - .5) * 5;
+      __tunnel.setStyle(card, "transform", "translateY(-6px) perspective(900px) rotateX(" + rx + "deg) rotateY(" + ry + "deg)");
+    });
+    card.addEventListener("mouseleave", function () {
+      __tunnel.setStyle(card, "transform", "");
+    });
+  });
+}</script>
+</body>
+</html>
